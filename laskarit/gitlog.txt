@@ -1,0 +1,115 @@
+﻿tkarkine@dhcp-asv-91:~/Documents/yliopisto/OTM/ot_viikko1/tiedostoja$ git log --stat | cat
+commit f4c2b64d0ab7b51f760fcb2bc409d3a68b6e7efc
+Author: Toivo Kärkinen <toivo.karkinen@helsinki.fi>
+Date:   Wed Oct 31 21:04:55 2018 +0200
+
+    poisto ja nimeäminen
+
+ tiedostoja/file2             | 0
+ tiedostoja/{file1 => file22} | 0
+ 2 files changed, 0 insertions(+), 0 deletions(-)
+
+commit 89ae2a3ce3fccb1237304b87c341e2a4de18aba4
+Author: Toivo Kärkinen <toivo.karkinen@helsinki.fi>
+Date:   Wed Oct 31 21:03:06 2018 +0200
+
+    tiedostot
+
+ tiedostoja/file1 | 0
+ tiedostoja/file2 | 0
+ tiedostoja/file3 | 0
+ 3 files changed, 0 insertions(+), 0 deletions(-)
+
+commit ded87371350ed4be92e8f8fd47300a183c8a68ce
+Author: Toivo Kärkinen <toivo.karkinen@helsinki.fi>
+Date:   Wed Oct 31 20:54:22 2018 +0200
+
+    muutoksia ekaan ja kolmanteen
+
+ eka.txt    | 4 +++-
+ kolmas.txt | 2 ++
+ 2 files changed, 5 insertions(+), 1 deletion(-)
+
+commit 2d029896b008725a0d1fa805153f80d3fbd179e3
+Author: Toivo Kärkinen <toivo.karkinen@helsinki.fi>
+Date:   Wed Oct 31 20:50:52 2018 +0200
+
+    uudelleen nimetty tiedosto ekaks
+
+ tiedosto.txt => eka.txt | 0
+ 1 file changed, 0 insertions(+), 0 deletions(-)
+
+commit d2e5b4c76c015155cad181bb0ee1a61c8bf3eeb4
+Author: Toivo Kärkinen <toivo.karkinen@helsinki.fi>
+Date:   Wed Oct 31 20:48:20 2018 +0200
+
+    poisto
+
+ toinen.txt | 1 -
+ 1 file changed, 1 deletion(-)
+
+commit 6f0470de10680c4bbbf5dead8f622aea95e28c7d
+Author: Toivo Kärkinen <toivo.karkinen@helsinki.fi>
+Date:   Wed Oct 31 20:43:47 2018 +0200
+
+    tekstiä muokattu
+
+ tiedosto.txt | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
+
+commit 97e42b2253aba026e5917f1725d2234d6e9a0b66
+Author: Toivo Kärkinen <toivo.karkinen@helsinki.fi>
+Date:   Wed Oct 31 20:40:42 2018 +0200
+
+    tekstiä lisätty
+
+ tiedosto.txt | 9 +++++++++
+ 1 file changed, 9 insertions(+)
+
+commit 5bf8b19005a1f7946da684151644b779210ab6f6
+Author: Toivo Kärkinen <toivo.karkinen@helsinki.fi>
+Date:   Wed Oct 31 20:26:47 2018 +0200
+
+    alihakemisto stuff
+
+ stuff/user.txt | 0
+ 1 file changed, 0 insertions(+), 0 deletions(-)
+
+commit 3952be44ee1b1b3d601155e7c7618e71b5aa5bc8
+Author: Toivo Kärkinen <toivo.karkinen@helsinki.fi>
+Date:   Wed Oct 31 20:24:56 2018 +0200
+
+    toka ja kolmas muokattu
+
+ kolmas.txt | 1 +
+ toinen.txt | 1 +
+ 2 files changed, 2 insertions(+)
+
+commit 62a505bb9e1bc47b4e8b0a2aaece5c9c59df42af
+Author: Toivo Kärkinen <toivo.karkinen@helsinki.fi>
+Date:   Wed Oct 31 20:21:14 2018 +0200
+
+    kolmas luotu
+
+ kolmas.txt | 0
+ 1 file changed, 0 insertions(+), 0 deletions(-)
+
+commit ded52a7ed5ab544f71a109470ec88bb7f6f9c7d7
+Author: Toivo Kärkinen <toivo.karkinen@helsinki.fi>
+Date:   Wed Oct 31 20:14:44 2018 +0200
+
+    muutos ja lisäys
+
+ tiedosto.txt | 1 +
+ toinen.txt   | 0
+ 2 files changed, 1 insertion(+)
+
+commit ed002e78efad251f6b2ba462e3613f9a59c4dbd8
+Author: Toivo Kärkinen <toivo.karkinen@helsinki.fi>
+Date:   Wed Oct 31 20:10:06 2018 +0200
+
+    tiedosto.txt luotu
+
+ tiedosto.txt | 0
+ 1 file changed, 0 insertions(+), 0 deletions(-)
+tkarkine@dhcp-asv-91:~/Documents/yliopisto/OTM/ot_viikko1/tiedostoja$ 
