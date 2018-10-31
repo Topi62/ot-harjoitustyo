@@ -113,3 +113,5 @@ Date:   Wed Oct 31 20:10:06 2018 +0200
  tiedosto.txt | 0
  1 file changed, 0 insertions(+), 0 deletions(-)
 tkarkine@dhcp-asv-91:~/Documents/yliopisto/OTM/ot_viikko1/tiedostoja$ 
+
+Lisätty rivi etänä jotta saadaan harjoiteltua merge!
