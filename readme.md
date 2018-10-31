@@ -16,3 +16,5 @@ _kursiivilla ja **boldilla** saadaan eloisuutta tekstiin_
 [komentorivi.txt](https://github.com/Topi62/ot-harjoitustyo/blob/master/laskarit/viikko1/komentorivi.txt)
 
 Tämä rivi kirjoitettu jälleen lokaalisti!
+
+ristiriidan tekoa.
