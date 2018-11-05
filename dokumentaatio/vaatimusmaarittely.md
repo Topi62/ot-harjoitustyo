@@ -1,6 +1,6 @@
 # Vaatimusmäärittely
 
-## Sovellusen tarkoitus
+## Sovelluksen tarkoitus
 
 ## Käyttäjät
 
