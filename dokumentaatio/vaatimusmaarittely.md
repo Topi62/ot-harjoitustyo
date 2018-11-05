@@ -1,11 +1,11 @@
-#Vaatimusmäärittely
+# Vaatimusmäärittely
 
-##Sovellusen tarkoitus
+## Sovellusen tarkoitus
 
-##Käyttäjät
+## Käyttäjät
 
-##Käyttöliittymäluonnos
+## Käyttöliittymäluonnos
 
-##Version tarjoama toiminnallisuus
+## Version tarjoama toiminnallisuus
 
-##Jatkokehitysideoita
+## Jatkokehitysideoita
