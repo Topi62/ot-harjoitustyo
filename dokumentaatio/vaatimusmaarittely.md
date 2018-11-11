@@ -6,7 +6,9 @@ Sovellus auttaa seuraamaan työn budjetoinnin valvontaa. Sovelluksessa työlle l
 
 ## Käyttäjät
 
-Käyttäjiä ovat päällikkö ja työnjohtajat.
+Käyttäjiä ovat
+- päällikkö 
+- työnjohtajat.
 
 ## Käyttöliittymäluonnos
 
@@ -15,21 +17,33 @@ Käyttäjiä ovat päällikkö ja työnjohtajat.
 ## Version tarjoama toiminnallisuus
 
 
-Päällikkö kirjautuu, jolloin päällikkö näkee työnjohtajat ja työt listauksena, josta voi valita jonkun tarkasteluun.
-Työnjohtajan valitessaan päällikkö näkee työnjohtajan työt listauksena, josta voi valita jonkun tarkasteluun.
+Päällikkö kirjautuu:
+- päällikkö näkee työnjohtajat ja työt listauksena, josta voi valita jonkun tarkasteluun.
+- työnjohtajan valitessaan päällikkö näkee työnjohtajan työt listauksena, josta voi valita jonkun tarkasteluun.
+- työn tarkastelussa päällikkö näkee budjettivertailun, sekä mahdolliset ylityksen hyväksymispyynnöt.
+- päällikkö voi hyväksyä tai hylätä ylityksen. Hyväksytty pyyntö kirjautuu uudeksi budjettin rivisummaksi.
 
-Työn tarkastelussa päällikkö näkee budjettivertailun, sekä mahdolliset ylityksen hyväksymispyynnöt.
+Työnjohtaja kirjautuu:
+- työnjohtaja näkee työnsä listauksena, josta voi valita jonkun tarkasteluun.
+- tarkastelussa 
+ - työnjohtaja näkee budjettivertailun
+ - voi kirjata kuluja 
+ - pyytää ylityslupaa tarvittaessa rivi kohtaisesti. 
 
-Päällikkö voi hyväksyä tai hylätä ylityksen. Hyväksytty pyyntö kirjautuu uudeksi budjettin rivisummaksi.
+Budjettivertailussa:
+- näkyy budjetin rivisumma
+- käytetty summa
+- jäljellä oleva summa
+- sekä toteutunut prosentti.
+- vertailussa erottuu selkeästi rivit, joila budjetti on ylitetty. 
 
-Työnjohtaja kirjautuu, jolloin näkee työnsä listauksena, josta voi valita jonkun tarkasteluun.
-Tarkastelussa työnjohtaja näkee budjettivertailun, voi kirjata kuluja ja pyytää ylityslupaa tarvittaessa rivi kohtaisesti. 
-
-Budjettivertailussa näkyy budjetin rivisumma, käytetty summa, jäljellä oleva summa, sekä toteutunut prosentti.
-Vertailussa erottuu selkeästi rivit, joila budjetti on ylitetty. 
-
-Ylityksen hyväksymispyynnössä on kentät nyt toteutuvalle ylitykselle, tulevalle kokonaisylitykselle sekä perustelulle. 
+Ylityksen hyväksymispyynnössä on kentät
+- nyt toteutuvalle ylitykselle
+- tulevalle kokonaisylitykselle 
+- perustelulle. 
 
 ## Jatkokehitysideoita
 
-Työlle kiinnitetään resursseja, joille määritellään arvo. Summan sijaan resurssikulujen kirjaus tapahtuu kunkin resurssin määrän mukaan. Työlle kirjataan valmistumisaste, ja budjettivertailu vertaa paitsi kokonaisbudjettiin, myös valmistumisasteen mukaiseen budjettiin.
+- Työlle kiinnitetään resursseja, joille määritellään arvo.
+- Summan sijaan resurssikulujen kirjaus tapahtuu kunkin resurssin määrän mukaan.
+- Työlle kirjataan valmistumisaste, ja budjettivertailu vertaa paitsi kokonaisbudjettiin, myös valmistumisasteen mukaiseen budjettiin.
