@@ -17,5 +17,6 @@ public interface BudgetDao {
     public boolean saveNewUser(User user);
     public boolean saveNewJob(Job job);
     public List<Job> getJobs();   
+    public Job addJob(String name, int owner);
     
 }

@@ -29,5 +29,10 @@ public class MemoryBudgetDao implements BudgetDao{
     public List<Job> getJobs() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
+
+    @Override
+    public Job addJob(String name, int owner) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
     
 }

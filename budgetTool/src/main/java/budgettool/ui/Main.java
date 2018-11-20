@@ -30,6 +30,9 @@ public class Main {
         ui= new TextUi();
         ui.showJobs(list);
         
-  System.out.println("yhteys");
+        //lisätään uusi job foreman 1:lle
+        Job newJob = budjetti.addJob("New projekt", 2);
+        // tulostetaan uuden jobin tietokannan antama id
+        System.out.println(newJob.getId());
 }
 }

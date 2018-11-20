@@ -22,4 +22,10 @@ public class BudgetService {
     public List<Job> getJobs(){
         return database.getJobs();
     }
+    
+    public Job addJob(String name, int owner){
+        return database.addJob(name,owner);
+        
+        
+    }
 }
