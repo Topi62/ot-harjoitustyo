@@ -25,7 +25,5 @@ public class BudgetService {
     
     public Job addJob(String name, int owner){
         return database.addJob(name,owner);
-        
-        
     }
 }

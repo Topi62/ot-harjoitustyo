@@ -16,16 +16,10 @@ public class TextUi implements Ui{
 
     @Override
     public void showJobs(List<Job> jobs) {
-      // pomon työlistaus
-    System.out.println("boss");
-    //toistetaan per työnjohtaja
-    for (int f=0;f<2;f++){
-    System.out.println("foreman"+f);
-    // toistetaan per työ
-    for (int j=0;j<4;j++){
-    System.out.println("Job"+j + " name of the job");
-    }
+        jobs.forEach((job) -> {
+            System.out.println(job.toString());
+        });
     }
     }
     
-}
+

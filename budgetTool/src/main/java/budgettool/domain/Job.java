@@ -42,4 +42,11 @@ public class Job {
     public int getOwner(){
         return owner;
     }
+    
+    
+    @Override
+    public String toString(){
+        return "Job id: " + id + " Job name: " + name
+                + " job owner: " + owner;
+    }
 }

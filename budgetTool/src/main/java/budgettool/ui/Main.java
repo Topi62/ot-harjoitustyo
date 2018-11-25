@@ -8,7 +8,7 @@ package budgettool.ui;
 import budgettool.dao.SqlBudgetDao;
 import budgettool.domain.BudgetService;
 import budgettool.domain.Job;
-import java.io.IOException;
+import java.sql.SQLException;
 import java.util.List;
 
 
@@ -17,22 +17,37 @@ import java.util.List;
  * @author tkarkine
  */
 public class Main {
-    public static void main(String[] args) throws IOException, ClassNotFoundException {
-        SqlBudgetDao database = new SqlBudgetDao("jdbc:sqlite:budjetti.db");
-        database.init();
-        
-        BudgetService budjetti = new BudgetService(database);
-        
-        //täytyy vielä miettiä mihin nää laitetaan jatkossa, app?
-        List<Job> list = budjetti.getJobs();
-        
+    public static void main(String[] args)  {
+        //tässä versiossa vielä main hoitaa hommat, jatkossa ui:ssa käyttäjä
+        SqlBudgetDao database;
+        BudgetService budjetti;
         Ui ui;
+        List<Job> list;
+        Job job;
+        
         ui= new TextUi();
+        
+        try {
+            database= new SqlBudgetDao("jdbc:postgresql://localhost:5432/budgettool");
+            // tällä välitetään jo database, mutta pitää vielä välittää käyttöliittymä
+            budjetti = new BudgetService(database);
+         
+        //täytyy vielä miettiä mihin nää loput laitetaan jatkossa?
+              
+        //ensimmäinen toiminnallisuus, näytetään työlista
+        list = budjetti.getJobs();
         ui.showJobs(list);
         
-        //lisätään uusi job foreman 1:lle
-        Job newJob = budjetti.addJob("New projekt", 2);
+        //toinen toiminnallisuus lisätään työ
+        //lisätään uusi job foreman 1:lle, 
+        job = budjetti.addJob("New projekt", 2);
         // tulostetaan uuden jobin tietokannan antama id
-        System.out.println(newJob.getId());
+        System.out.println(job.getId());
+        
+        } catch (ClassNotFoundException | SQLException ex) {
+            System.out.println( ex.getMessage());
+        }
+                
+       
 }
 }
