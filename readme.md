@@ -21,9 +21,9 @@ Sovellus on harjoitustyö Helsingin yliopiston Tietojenkäsittelytieteen kurssil
 
 Testit suoritetaan komennolla
 
-...
+<pre><code>
 mvn test
-...
+</code></pre>
 
 _kursiivilla ja **boldilla** saadaan eloisuutta tekstiin_
 
