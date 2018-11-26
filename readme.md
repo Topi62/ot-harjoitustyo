@@ -31,5 +31,34 @@ mvn test
 
 ## Releaset
 
-[viikko4](https://github.com/Topi62/ot-harjoitustyo/blob/master/budgetTool/tag/ver0.2)
+[Viikko 4](https://github.com/Topi62/ot-harjoitustyo/blob/master/budgetTool/tag/viikko4)
+
+Testikattavuusraportti luodaan komennolla
+<code>
+mvn jacoco:report
+</code>
+Kattavuusraporttia voi tarkastella avaamalla selaimella tiedosto target/site/jacoco/index.html
+
+Suoritettavan jarin generointi
+Komento
+
+<code>
+mvn package
+</code>
+generoi hakemistoon target suoritettavan jar-tiedoston OtmTodoApp-1.0-SNAPSHOT.jar
+
+JavaDoc
+JavaDoc generoidaan komennolla
+
+<code>
+mvn javadoc:javadoc
+</code>
+JavaDocia voi tarkastella avaamalla selaimella tiedosto target/site/apidocs/index.html
+
+Checkstyle
+Tiedostoon checkstyle.xml määrittelemät tarkistukset suoritetaan komennolla
+<code>
+ mvn jxr:jxr checkstyle:checkstyle
+</code>
+Mahdolliset virheilmoitukset selviävät avaamalla selaimella tiedosto target/site/checkstyle.html
 
