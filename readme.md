@@ -16,7 +16,11 @@ Sovellus on harjoitustyö Helsingin yliopiston Tietojenkäsittelytieteen kurssil
 
 [Tuntikirjapito](https://github.com/Topi62/ot-harjoitustyo/blob/master/dokumentaatio/tuntikirjanpito.md)
 
+## Sovelluksen tietokanta
 
+Sovellus käyttää PostgreSQL tietokantaa, joka oletuksena täytyy olla käynnissä //localhost:5432 portissa ja sen
+käyttäjä postgres ja salasana admin määritelty
+ 
 ## Komentorivitoiminnot
 
 Testit suoritetaan komennolla
@@ -25,19 +29,7 @@ Testit suoritetaan komennolla
 mvn test
 </code></pre>
 
-_kursiivilla ja **boldilla** saadaan eloisuutta tekstiin_
+## Releaset
 
-* lista
-* jossa
-  * voi
-  * useita
-  * tasoja
+[viikko4](https://github.com/Topi62/ot-harjoitustyo/blob/master/budgetTool/tag/ver0.2)
 
-
-[gitlog.txt](https://github.com/Topi62/ot-harjoitustyo/blob/master/laskarit/viikko1/gitlog.txt)
-
-[komentorivi.txt](https://github.com/Topi62/ot-harjoitustyo/blob/master/laskarit/viikko1/komentorivi.txt)
-
-Tämä rivi kirjoitettu jälleen lokaalisti!
-
-ristiriidan tekoa.
