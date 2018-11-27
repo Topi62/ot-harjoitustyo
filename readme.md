@@ -39,21 +39,27 @@ mvn test
 
 
 Testikattavuusraportti luodaan komennolla
+
 <code>
 mvn jacoco:report
 </code>
+
 Kattavuusraporttia voi tarkastella avaamalla selaimella tiedosto target/site/jacoco/index.html
 
 Komento
+
 <code>
 mvn package
 </code>
+
 generoi hakemistoon target suoritettavan jar-tiedoston budgetTool-1.0-SNAPSHOT.jar
 
 Checkstyle
 Tiedostoon checkstyle.xml määrittelemät tarkistukset suoritetaan komennolla
+
 <code>
  mvn jxr:jxr checkstyle:checkstyle
 </code>
+
 Mahdolliset virheilmoitukset selviävät avaamalla selaimella tiedosto target/site/checkstyle.html
 
