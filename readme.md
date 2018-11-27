@@ -10,11 +10,11 @@ Sovellus on harjoitustyö Helsingin yliopiston Tietojenkäsittelytieteen kurssil
 
 ## Dokumentaatio
 
-[Vaatimusmäärittely](https://github.com/Topi62/ot-harjoitustyo/blob/master/dokumentaatio/vaatimusmaarittely.md)
+[Vaatimusmäärittely](https://github.com/Topi62/ot-harjoitustyo/blob/master/budgetTool/dokumentaatio/vaatimusmaarittely.md)
 
-[Arkkitehtuurikuvaus](https://github.com/Topi62/ot-harjoitustyo/blob/master/dokumentaatio/arkkitehtuurikuvaus.md)
+[Arkkitehtuurikuvaus](https://github.com/Topi62/ot-harjoitustyo/blob/master/budgetTool/dokumentaatio/arkkitehtuurikuvaus.md)
 
-[Tuntikirjapito](https://github.com/Topi62/ot-harjoitustyo/blob/master/dokumentaatio/tuntikirjanpito.md)
+[Tuntikirjapito](https://github.com/Topi62/ot-harjoitustyo/blob/master/budgetTool/dokumentaatio/tuntikirjanpito.md)
 
 ## Sovelluksen tietokanta
 
