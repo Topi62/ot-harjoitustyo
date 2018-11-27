@@ -2,4 +2,4 @@
 
 ## BudgetTool
 
-![Alt Text](budjettool.jpg?raw=true)
+![Pakkauskaavio](budjettool.jpg)
