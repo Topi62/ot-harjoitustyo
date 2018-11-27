@@ -12,7 +12,7 @@ import java.util.List;
  *
  * @author tkarkine
  */
-public class TextUi implements Ui{
+public class TextUi implements Ui {
 
     @Override
     public void showJobs(List<Job> jobs) {
@@ -20,6 +20,6 @@ public class TextUi implements Ui{
             System.out.println(job.toString());
         });
     }
-    }
+}
     
 

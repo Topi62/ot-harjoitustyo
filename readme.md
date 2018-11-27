@@ -23,6 +23,12 @@ käyttäjä postgres ja salasana admin määritelty
  
 ## Komentorivitoiminnot
 
+Ohjelman voi käynnistää /budgetTool kansiossa komennolla
+<code>
+mvn compile exec:java -Dexec.mainClass=budgettool.ui.Main
+</code>
+tai avatun projektin netbeansissa vihreällä napilla
+
 Testit suoritetaan komennolla
 
 <pre><code>

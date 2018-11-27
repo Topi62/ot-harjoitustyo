@@ -13,7 +13,7 @@ import java.util.List;
  *
  * @author tkarkine
  */
-public class MemoryBudgetDao implements BudgetDao{
+public class MemoryBudgetDao implements BudgetDao {
 
     @Override
     public boolean saveNewUser(User user) {

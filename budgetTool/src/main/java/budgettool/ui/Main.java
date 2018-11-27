@@ -25,29 +25,28 @@ public class Main {
         List<Job> list;
         Job job;
         
-        ui= new TextUi();
+        ui = new TextUi();
         
         try {
-            database= new SqlBudgetDao("jdbc:postgresql://localhost:5432/budgettool");
+            database = new SqlBudgetDao("jdbc:postgresql://localhost:5432/budgettool");
             // tällä välitetään jo database, mutta pitää vielä välittää käyttöliittymä
             budjetti = new BudgetService(database);
          
-        //täytyy vielä miettiä mihin nää loput laitetaan jatkossa?
+            //täytyy vielä miettiä mihin nää loput laitetaan jatkossa?
               
-        //ensimmäinen toiminnallisuus, näytetään työlista
-        list = budjetti.getJobs();
-        ui.showJobs(list);
+            //ensimmäinen toiminnallisuus, näytetään työlista
+            list = budjetti.getJobs();
+            ui.showJobs(list);
         
-        //toinen toiminnallisuus lisätään työ
-        //lisätään uusi job foreman 1:lle, 
-        job = budjetti.addJob("New projekt", 2);
-        // tulostetaan uuden jobin tietokannan antama id
-        System.out.println(job.getId());
+            //toinen toiminnallisuus lisätään työ
+            //lisätään uusi job foreman 1:lle, 
+            job = budjetti.addJob("New projekt", 2);
+            // tulostetaan uuden jobin tietokannan antama id
+            System.out.println(job.getId());
         
         } catch (ClassNotFoundException | SQLException ex) {
-            System.out.println( ex.getMessage());
+            System.out.println(ex.getMessage());
         }
                 
-       
-}
+    }
 }

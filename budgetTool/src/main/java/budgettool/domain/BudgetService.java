@@ -15,15 +15,15 @@ import java.util.List;
 public class BudgetService {
     SqlBudgetDao database;
     
-    public BudgetService(SqlBudgetDao database){
+    public BudgetService(SqlBudgetDao database) {
         this.database = database;
     }
     
-    public List<Job> getJobs(){
+    public List<Job> getJobs() {
         return database.getJobs();
     }
     
-    public Job addJob(String name, int owner){
-        return database.addJob(name,owner);
+    public Job addJob(String name, int owner) {
+        return database.addJob(name, owner);
     }
 }

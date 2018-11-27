@@ -15,41 +15,41 @@ public class User {
     private String name;
     private int boss;
     
-    public User( int type, String name){
+    public User(int type, String name) {
         //uusi käyttäjä jolle haetaan tietokannasta id ja boss
-        this.type=type;
-        this.name=name;
+        this.type = type;
+        this.name = name;
     }
     
-    public User(int id, int type, String name, int boss){
+    public User(int id, int type, String name, int boss) {
         //tietokannasta haettu käyttäjä
-        this.id=id;
-        this.type=type;
-        this.name=name;
-        this.boss=boss;
+        this.id = id;
+        this.type = type;
+        this.name = name;
+        this.boss = boss;
     }
     
-    public void setId(int id){
-        this.id=id;
+    public void setId(int id) {
+        this.id = id;
     }
     
-    public void setBoss(int boss){
-        this.boss=boss;
+    public void setBoss(int boss) {
+        this.boss = boss;
     }
     
-    public int getId(){
+    public int getId() {
         return id;
     }
     
-    public int getType(){
+    public int getType() {
         return type;
     }
     
-    public String getName(){
+    public String getName() {
         return name;
     }
     
-    public int getBoss(){
+    public int getBoss() {
         return boss;
     }
     

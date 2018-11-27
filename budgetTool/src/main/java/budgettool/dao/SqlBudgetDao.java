@@ -21,9 +21,9 @@ public final class SqlBudgetDao implements BudgetDao {
     private ResultSet res;
 
     public SqlBudgetDao(String databaseAddress) throws ClassNotFoundException, SQLException {
-       this.databaseAddress = databaseAddress;
+        this.databaseAddress = databaseAddress;
        
-        if (databaseNotExist()){
+        if (databaseNotExist()) {
             createDatabase("budgettool");
         }
         //jos tauluja ei ole luotu, tee nämä
@@ -32,49 +32,55 @@ public final class SqlBudgetDao implements BudgetDao {
         
     }
      
-    public Connection getConn(){
+    public Connection getConn() {
         return conn;
     }
 
     public void getConnection()  {
         try {
-            conn = DriverManager.getConnection(databaseAddress, "postgres","admin");
+            conn = DriverManager.getConnection(databaseAddress, "postgres", "admin");
         } catch (SQLException e) {
            // error printing
             System.out.println("Error get connection >> " + e.getMessage());
         }
     }
     
-    public void closeConnection() throws SQLException{
+    public void closeConnection() throws SQLException {
         conn.close();
     }
     
-    public boolean databaseNotExist(){
+    public boolean databaseNotExist() {
         //not know yet how to test if exsist
         
         return false;
     }
     
-    public void createDatabase(String databasename) throws SQLException{
+    public void createDatabase(String databasename) throws SQLException {
         getConnection();
         Statement statement = conn.createStatement();
-        statement.executeUpdate("CREATE DATABASE budgettool");
+        statement.executeUpdate("CREATE DATABASE " + databasename);
         closeConnection();
-        databaseAddress+="budgettool";
+        databaseAddress += databasename;
         List<String> lauseet = createTables();
         executeCommands(lauseet);
     }
     
-    public void executeCommands(List<String> lauseet){
-        try  {
+    public void executeCommands(List<String> lauseet) throws SQLException {
+        getConnection();
+        Statement st = conn.createStatement();
+            // suoritetaan komennot
+        for (String lause : lauseet) {
+            st.executeUpdate(lause);
+        }    
+        closeConnection();
+    }
+    
+    public void executeCommand(String lause) {
+        try {
             getConnection();
             Statement st = conn.createStatement();
-            // suoritetaan komennot
-            for (String lause : lauseet) {
-                System.out.println("suoritetaan: "+lause);
-               st.executeUpdate(lause);
-               
-            }
+            // suoritetaan komento
+            st.executeUpdate(lause);
             closeConnection();
         } catch (SQLException e) {
             // error printing
@@ -82,35 +88,21 @@ public final class SqlBudgetDao implements BudgetDao {
         }
     }
     
-     public void executeCommand(String lause){
-       try  {
-            getConnection();
-            Statement st = conn.createStatement();
-            // suoritetaan komento
-             st.executeUpdate(lause);
-             closeConnection();
-        } catch (SQLException e) {
-            // error printing
-            System.out.println("Error >> " + e.getMessage());
-        }
-    }
-    
-     public ResultSet executeQuery(String question) {
-        
-         res = null;
+    public ResultSet executeQuery(String question) {
+        res = null;
         // "try with resources" closing automatically
         try  {
             getConnection();
             Statement ps = conn.createStatement();
             res = ps.executeQuery(question);
-          } catch (SQLException e) {
+        } catch (SQLException e) {
             // error printing
             System.out.println("Error on query >> " + e.getMessage());
         }
         return res;
     }
 
-    private List<String> createTables(){
+    private List<String> createTables() {
         ArrayList<String> list = new ArrayList<>();
 
          //tietokantataulujen luomiseen tarvittavat komennot suoritusjärjestyksessä
@@ -136,15 +128,15 @@ public final class SqlBudgetDao implements BudgetDao {
     @Override
     public List<Job> getJobs() {
         //ei vielä toteutettu hakua, näytetään uin valmis lista
-        List<Job> list=new ArrayList<>();
+        List<Job> list = new ArrayList<>();
         res = executeQuery("SELECT * FROM \"jobs\";");
-          try {
-            while (res.next()){
-               list.add(new Job (res.getInt("id"),
-                res.getString("name"),
-                res.getInt("owner")
+        try {
+            while (res.next()) {
+                list.add(new Job(res.getInt("id"),
+                    res.getString("name"),
+                    res.getInt("owner")
                 ));
-               closeConnection();
+                closeConnection();
             }
         } catch (SQLException e) {
             System.out.println("Error >> " + e.getMessage());
@@ -153,26 +145,26 @@ public final class SqlBudgetDao implements BudgetDao {
     }
     
     @Override
-    public Job addJob(String name, int owner){
+    public Job addJob(String name, int owner) {
         Job job = null;
         //haetaan tietokannasta seuraava numero
-        String question ="Select max(id)+1 from \"jobs\";";
-        ResultSet rs=executeQuery(question);
+        String question = "Select max(id)+1 from \"jobs\";";
+        ResultSet rs = executeQuery(question);
         
-          try {
-              if(rs.next()){
-            job=new Job(rs.getInt(1),name,owner);
-            //lisätään job tietokantaan
-            executeCommand("INSERT INTO \"jobs\" VALUES ("+ job.getId() +
-                    ", '" + name + "', " + owner +");");
+        try {
+            if (rs.next()) {
+                job = new Job(rs.getInt(1), name, owner);
+                //lisätään job tietokantaan
+                executeCommand("INSERT INTO \"jobs\" VALUES (" + job.getId() +
+                    ", '" + name + "', " + owner + ");");
             
-              }
-          } catch (SQLException e) {
+            }
+        } catch (SQLException e) {
             // error printing
             System.out.println("Error >> " + e.getMessage());
            
         }
-          return job;
+        return job;
     }
 }
 
