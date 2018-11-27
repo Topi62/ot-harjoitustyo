@@ -2,4 +2,4 @@
 
 ## BudgetTool
 
-![Pakkauskaavio](budjettool.jpg)
+![Pakkauskaavio](budgettool.jpg)
