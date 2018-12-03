@@ -19,13 +19,13 @@ Sovellus on harjoitustyö Helsingin yliopiston Tietojenkäsittelytieteen kurssil
 ## Sovelluksen tietokanta
 
 Sovellus käyttää PostgreSQL tietokantaa, joka oletuksena täytyy olla käynnissä //localhost:5432 portissa ja sen
-käyttäjä postgres ja salasana admin määritelty
+käyttäjä postgres ja salasana admin määritelty sekä budgettool database luotu
  
 ## Komentorivitoiminnot
 
 Ohjelman voi käynnistää /budgetTool kansiossa komennolla
 <code>
-mvn compile exec:java -Dexec.mainClass=budgettool.ui.Main
+mvn compile exec:java -Dexec.mainClass=Main
 </code>
 tai avatun projektin netbeansissa vihreällä napilla
 
