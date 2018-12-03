@@ -6,6 +6,7 @@
 package budgettool.dao;
 
 import budgettool.domain.Job;
+import budgettool.domain.Row;
 import budgettool.domain.User;
 import java.util.List;
 
@@ -14,9 +15,13 @@ import java.util.List;
  * @author tkarkine
  */
 public interface BudgetDao {
-    public boolean saveNewUser(User user);
-    public boolean saveNewJob(Job job);
     public List<Job> getJobs();   
     public Job addJob(String name, int owner);
+    public User addUser(int type, String name, int boss);
+    public void addRow(int jobid, String resurs, int budgetsum);
+    public boolean addCostToRow(int id, int sum);
+    public User loginUser(int id, String name);
+    public List<Row> getRowsByBoolean(String column);
+    
     
 }

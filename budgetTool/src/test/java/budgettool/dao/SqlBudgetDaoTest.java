@@ -26,39 +26,22 @@ import static org.junit.Assert.*;
  */
 
  public class SqlBudgetDaoTest {
-     SqlBudgetDao data;
-     SqlBudgetDao wrongData;
-    private final ByteArrayOutputStream outContent = new ByteArrayOutputStream();
-    private final ByteArrayOutputStream errContent = new ByteArrayOutputStream();
-    private final PrintStream originalOut = System.out;
-    private final PrintStream originalErr = System.err;
+    SqlBudgetDao data;
      
-     public void SqlBudgetDaoTest(){
-         
-     }
+    public void SqlBudgetDaoTest(){
+       
+    }
     
-   @Before
-    public void setUp() throws ClassNotFoundException, SQLException {
+    @Before
+    public void setUp() {
         data=new SqlBudgetDao("jdbc:postgresql://localhost:5432/budgettool");
-        wrongData= new SqlBudgetDao("jdbc:posgresql://nowhere");
-        System.setOut(new PrintStream(outContent));
-        System.setErr(new PrintStream(errContent));
     }
     
     @After
     public void tearDown() {
-        System.setOut(originalOut);
-        System.setErr(originalErr);
+        
     } 
-    
-    @Test
-    public void connectionCanBeMade() throws SQLException{
-        data.getConnection();
-        assertNotNull(data);
-        data.closeConnection();
-       
-    }
-    
+   
     @Test
     public void addJobReturnsJobid(){
         Job job;
@@ -66,14 +49,11 @@ import static org.junit.Assert.*;
         assertTrue(job.getId()>1);
     }       
     
-    
     @Test
-    public void getJobsReturnsRows() throws SQLException{
-    data.getConnection();
+    public void getJobsReturnsRows() {
     List<Job> jobs;
     jobs =data.getJobs();
     assertNotNull(jobs);
-    data.closeConnection();
     }
 
 }

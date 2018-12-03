@@ -6,6 +6,7 @@
 package budgettool.dao;
 
 import budgettool.domain.Job;
+import budgettool.domain.Row;
 import budgettool.domain.User;
 import java.util.List;
 
@@ -15,15 +16,7 @@ import java.util.List;
  */
 public class MemoryBudgetDao implements BudgetDao {
 
-    @Override
-    public boolean saveNewUser(User user) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public boolean saveNewJob(Job job) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
+   
 
     @Override
     public List<Job> getJobs() {
@@ -32,6 +25,31 @@ public class MemoryBudgetDao implements BudgetDao {
 
     @Override
     public Job addJob(String name, int owner) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public User addUser(int type, String name, int boss) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void addRow(int jobid, String resurs, int budgetsum) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public boolean addCostToRow(int id, int sum) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public User loginUser(int id, String name) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public List<Row> getRowsByBoolean(String column) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     

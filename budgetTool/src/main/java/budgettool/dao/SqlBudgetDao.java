@@ -1,4 +1,4 @@
-    /*
+/*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
@@ -6,10 +6,16 @@
 package budgettool.dao;
 
 import budgettool.domain.Job;
+import budgettool.domain.Row;
 import budgettool.domain.User;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import org.h2.tools.RunScript;
 
 /**
  *
@@ -18,128 +24,106 @@ import java.util.List;
 public final class SqlBudgetDao implements BudgetDao {
     private String databaseAddress;
     private Connection conn;
+    private Statement st;
     private ResultSet res;
 
-    public SqlBudgetDao(String databaseAddress) throws ClassNotFoundException, SQLException {
+    public SqlBudgetDao(String databaseAddress) {
         this.databaseAddress = databaseAddress;
-       
-        if (databaseNotExist()) {
-            createDatabase("budgettool");
+        try {
+            conn = DriverManager.getConnection(databaseAddress, "postgres", "admin");
+            if (conn != null) {
+                //testing connection and create tables if not exists
+                ResultSet rs = conn.getMetaData().getTables(null, null, "user", null);
+                while (!rs.next()) { 
+                    try {
+                        RunScript.execute(conn, new FileReader("sql/database-tables.sql"));
+                        RunScript.execute(conn, new FileReader("sql/database-data.sql"));
+                        conn.close();
+                    } catch (FileNotFoundException | SQLException e) {
+                        errorMessage(e);
+                    } 
+                }      
+            } else {
+                // connect success, closed 
+                conn.close();
+            }
+        } catch (SQLException e) {
+            errorMessage(e);
         }
-        //jos tauluja ei ole luotu, tee nämä
-//        List<String> lauseet = createTables();
-//        executeCommands(lauseet);
-        
+       
+    }
+    
+    private void errorMessage(Exception e) {
+        System.out.println("Error: " + e.getMessage());
     }
      
-    public Connection getConn() {
-        return conn;
-    }
-
     public void getConnection()  {
         try {
             conn = DriverManager.getConnection(databaseAddress, "postgres", "admin");
         } catch (SQLException e) {
            // error printing
-            System.out.println("Error get connection >> " + e.getMessage());
+            errorMessage(e);
         }
     }
-    
-    public void closeConnection() throws SQLException {
-        conn.close();
-    }
-    
-    public boolean databaseNotExist() {
-        //not know yet how to test if exsist
         
-        return false;
-    }
-    
-    public void createDatabase(String databasename) throws SQLException {
+    public void executeCommands(List<String> lauseet) {
         getConnection();
-        Statement statement = conn.createStatement();
-        statement.executeUpdate("CREATE DATABASE " + databasename);
-        closeConnection();
-        databaseAddress += databasename;
-        List<String> lauseet = createTables();
-        executeCommands(lauseet);
-    }
-    
-    public void executeCommands(List<String> lauseet) throws SQLException {
-        getConnection();
-        Statement st = conn.createStatement();
-            // suoritetaan komennot
-        for (String lause : lauseet) {
-            st.executeUpdate(lause);
-        }    
-        closeConnection();
+        try {
+            st = conn.createStatement();
+            for (String lause : lauseet) {
+                st.executeUpdate(lause);
+            }    
+            conn.close();
+        } catch (SQLException ex) {
+            errorMessage(ex);
+        } 
     }
     
     public void executeCommand(String lause) {
         try {
-            getConnection();
-            Statement st = conn.createStatement();
+            Statement st2 = conn.createStatement();
             // suoritetaan komento
-            st.executeUpdate(lause);
-            closeConnection();
+            st2.executeUpdate(lause);
         } catch (SQLException e) {
             // error printing
-            System.out.println("Error >> " + e.getMessage());
+            errorMessage(e);
+            
         }
     }
     
     public ResultSet executeQuery(String question) {
+        // poistettava, conn sulkeminen sulkee resultSetin
         res = null;
         // "try with resources" closing automatically
         try  {
             getConnection();
-            Statement ps = conn.createStatement();
-            res = ps.executeQuery(question);
+            st = conn.createStatement();
+            res = st.executeQuery(question);
+            
         } catch (SQLException e) {
             // error printing
-            System.out.println("Error on query >> " + e.getMessage());
+            errorMessage(e);
         }
         return res;
-    }
-
-    private List<String> createTables() {
-        ArrayList<String> list = new ArrayList<>();
-
-         //tietokantataulujen luomiseen tarvittavat komennot suoritusjärjestyksessä
-       // list.add("CREATE TABLE \"user\" IF NOT EXIST (id INT PRIMARY KEY NOT NULL, type INT, name varchar(12), boss INT);");
-       // list.add("INSERT INTO \"user\"  VALUES (1,1,'Boss',1);");
-        //list.add("INSERT INTO \"user\"  VALUES (2,2,'Foreman1',2);");
-        //list.add("CREATE TABLE \"jobs\"  (id INT PRIMARY KEY NOT NULL , name varchar(12),owner INT REFERENCES \"user\" (id));");
-        //list.add("INSERT INTO \"jobs\" VALUES (2,'Contract2',2);");
-
-        return list;
-    }
-
-    @Override
-    public boolean saveNewUser(User user) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public boolean saveNewJob(Job job) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
     public List<Job> getJobs() {
         //ei vielä toteutettu hakua, näytetään uin valmis lista
         List<Job> list = new ArrayList<>();
-        res = executeQuery("SELECT * FROM \"jobs\";");
         try {
+            getConnection();
+            st = conn.createStatement();
+            res = st.executeQuery("SELECT * FROM \"jobs\";");
             while (res.next()) {
                 list.add(new Job(res.getInt("id"),
                     res.getString("name"),
                     res.getInt("owner")
                 ));
-                closeConnection();
+                conn.close();
             }
         } catch (SQLException e) {
-            System.out.println("Error >> " + e.getMessage());
+            errorMessage(e);
         }
         return list;
     }
@@ -147,24 +131,111 @@ public final class SqlBudgetDao implements BudgetDao {
     @Override
     public Job addJob(String name, int owner) {
         Job job = null;
-        //haetaan tietokannasta seuraava numero
-        String question = "Select max(id)+1 from \"jobs\";";
-        ResultSet rs = executeQuery(question);
-        
         try {
-            if (rs.next()) {
-                job = new Job(rs.getInt(1), name, owner);
+        //haetaan tietokannasta seuraava numero
+            getConnection();
+            st = conn.createStatement();
+            res = st.executeQuery("Select max(id)+1 from \"jobs\";");
+            if (res.next()) {
+                job = new Job(res.getInt(1), name, owner);
                 //lisätään job tietokantaan
                 executeCommand("INSERT INTO \"jobs\" VALUES (" + job.getId() +
                     ", '" + name + "', " + owner + ");");
-            
             }
+            conn.close();
         } catch (SQLException e) {
             // error printing
-            System.out.println("Error >> " + e.getMessage());
-           
+            errorMessage(e);
         }
         return job;
+    }
+
+    @Override
+    public User addUser(int type, String name, int boss) {
+        User user = null;
+        try {
+        //haetaan tietokannasta seuraava numero
+            getConnection();
+            st = conn.createStatement();
+            res = st.executeQuery("Select max(id)+1 from \"user\";");
+            if (res.next()) {
+                user = new User(res.getInt(1), type, name, boss);
+                //lisätään job tietokantaan
+                executeCommand("INSERT INTO \"user\" VALUES (" + user.getId() +
+                    ", " + type + ", '" + name + "', " + boss + ");");
+            }
+            conn.close();
+        } catch (SQLException e) {
+            // error printing
+            errorMessage(e);
+        }
+        return user; 
+    }
+
+    @Override
+    public void addRow(int jobid, String resurs, int budgetsum) {
+        try {
+        //haetaan tietokannasta seuraava numero
+            getConnection();
+            st = conn.createStatement();
+            res = st.executeQuery("Select max(id)+1 from \"rows\";");
+            if (res.next()) {
+               // add row to budget
+                executeCommand("INSERT INTO \"rows\" (id, jobid, resurs, budgetsum) VALUES (" + res.getInt(1) +
+                    ", " + jobid + ", '" + resurs + "', " + budgetsum + ");");
+            }
+            conn.close();
+        } catch (SQLException e) {
+            // error printing
+            errorMessage(e);
+        }
+    }
+
+    @Override
+    public boolean addCostToRow(int id, int sum) {
+        try {
+        //haetaan tietokannasta seuraava numero
+            getConnection();
+            st = conn.createStatement();
+            res = st.executeQuery("Select usedsum from \"rows\" where id = " + id + ";");
+            if (res.next()) {
+               // add row to budget
+                executeCommand("UPDATE \"rows\" set (usedsum)= " + (res.getInt(1) +
+                    sum) + " WHERE (id)= " + id + ";");
+            }
+            conn.close();
+        } catch (SQLException e) {
+            // error printing
+            errorMessage(e);
+        }
+        return true;
+    }
+
+    @Override
+    public User loginUser(int id, String name) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+    
+    @Override
+    public List<Row> getRowsByBoolean(String condition) {
+        //usage with approved, exceeded or request
+        List<Row> rows = new ArrayList<>();
+        try {
+            getConnection();
+            st = conn.createStatement();
+            res = st.executeQuery("SELECT * FROM \"rows\" WHERE " + condition + ";");
+            while (res.next()) {
+                rows.add(new Row(res.getInt("id"), res.getInt("jobid"),
+                    res.getString("resurs"), res.getInt("budgetSum"), res.getInt("usedSum"),
+                    res.getBoolean("approved"), res.getBoolean("exceeded"), res.getBoolean("request"),
+                    res.getInt("requestSum"), res.getString("reason")
+                ));
+                conn.close();
+            }
+        } catch (SQLException e) {
+            errorMessage(e);
+        }
+        return rows; 
     }
 }
 
