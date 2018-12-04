@@ -109,7 +109,6 @@ public final class SqlBudgetDao implements BudgetDao {
 
     @Override
     public List<Job> getJobs() {
-        //ei vielä toteutettu hakua, näytetään uin valmis lista
         List<Job> list = new ArrayList<>();
         try {
             getConnection();
@@ -236,6 +235,103 @@ public final class SqlBudgetDao implements BudgetDao {
             errorMessage(e);
         }
         return rows; 
+    }
+
+    @Override
+    public List<User> getUsers() {
+        List<User> list = new ArrayList<>();
+        try {
+            getConnection();
+            st = conn.createStatement();
+            res = st.executeQuery("SELECT * FROM \"user\";");
+            while (res.next()) {
+                list.add(new User(res.getInt("id"),
+                    res.getInt("type"),    
+                    res.getString("name"),
+                    res.getInt("boss")
+                ));
+                conn.close();
+            }
+        } catch (SQLException e) {
+            errorMessage(e);
+        }
+        return list;
+    }
+
+    @Override
+    public List<Job> getUserJobs(int userId) {
+        List<Job> list = new ArrayList<>();
+        try {
+            getConnection();
+            st = conn.createStatement();
+            res = st.executeQuery("SELECT * FROM \"jobs\" WHERE (owner)=" + userId + ";");
+            while (res.next()) {
+                list.add(new Job(res.getInt("id"),
+                    res.getString("name"),
+                    res.getInt("owner")
+                ));
+                conn.close();
+            }
+        } catch (SQLException e) {
+            errorMessage(e);
+        }
+        return list;
+    }
+
+    @Override
+    public List<Row> getRows() {
+        List<Row> list = new ArrayList<>();
+        try {
+            getConnection();
+            st = conn.createStatement();
+            res = st.executeQuery("SELECT * FROM \"rows\";");
+            while (res.next()) {
+                list.add(new Row(res.getInt("id"),
+                    res.getInt("jobid"),    
+                    res.getString("resurs"),
+                    res.getInt("budgetsum"),
+                    res.getInt("usedsum"),
+                    res.getBoolean("approved"),
+                    res.getBoolean("exceeded"),
+                    res.getBoolean("request"),
+                    res.getInt("requestsum"),    
+                    res.getString("reason")
+                       
+                ));
+                conn.close();
+            }
+        } catch (SQLException e) {
+            errorMessage(e);
+        }
+        return list;
+    }
+
+    @Override
+    public List<Row> getRows(int jobId) {
+        List<Row> list = new ArrayList<>();
+        try {
+            getConnection();
+            st = conn.createStatement();
+            res = st.executeQuery("SELECT * FROM \"rows\" WHERE (jobid)=" + jobId + ";");
+            while (res.next()) {
+                list.add(new Row(res.getInt("id"),
+                    res.getInt("jobid"),    
+                    res.getString("resurs"),
+                    res.getInt("budgetsum"),
+                    res.getInt("usedsum"),
+                    res.getBoolean("approved"),
+                    res.getBoolean("exceeded"),
+                    res.getBoolean("request"),
+                    res.getInt("requestsum"),    
+                    res.getString("reason")
+                       
+                ));
+                conn.close();
+            }
+        } catch (SQLException e) {
+            errorMessage(e);
+        }
+        return list;
     }
 }
 

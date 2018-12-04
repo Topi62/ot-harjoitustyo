@@ -64,4 +64,20 @@ public class Row {
         return true;
     }
     
+    @Override
+    public String toString() {
+        String status = jobId + ": " + id + " ";
+        if (approved) {
+            status += "Approved ";
+        }
+        if (exceeded) {
+            status += "EXCEEDED ";
+        }
+        if (request) {
+            status += "Request more " + ((double) (requestSum - budgetSum) / 100) + " ";
+        } 
+         return status + resurs + " used: " + ((double) usedSum / 100) + "/" + ((double) budgetSum / 100);
+                 
+    }
+    
 }

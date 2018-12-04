@@ -6,6 +6,8 @@
 package budgettool.ui;
 
 import budgettool.domain.Job;
+import budgettool.domain.Row;
+import budgettool.domain.User;
 import java.util.List;
 
 /**
@@ -15,5 +17,11 @@ import java.util.List;
 public interface Ui {
     
     public void showJobs(List<Job> jobs);
+
     
+    public void showUsers(List<User> userList);
+
+    public void showRows(List<Row> rowList);
+
+   
 }

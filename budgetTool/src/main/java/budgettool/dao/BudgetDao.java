@@ -16,12 +16,25 @@ import java.util.List;
  */
 public interface BudgetDao {
     public List<Job> getJobs();   
+    public List<Job> getUserJobs(int userId);
     public Job addJob(String name, int owner);
+    
     public User addUser(int type, String name, int boss);
+    public User loginUser(int id, String name);
+    public List<User> getUsers();
+     
+    public List<Row> getRows();
+    public List<Row> getRowsByBoolean(String column);
     public void addRow(int jobid, String resurs, int budgetsum);
     public boolean addCostToRow(int id, int sum);
-    public User loginUser(int id, String name);
-    public List<Row> getRowsByBoolean(String column);
+
+    public List<Row> getRows(int jobId);
+
+   
+
+    
+
+    
     
     
 }

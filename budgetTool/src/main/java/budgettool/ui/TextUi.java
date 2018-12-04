@@ -6,6 +6,9 @@
 package budgettool.ui;
 
 import budgettool.domain.Job;
+import budgettool.domain.Row;
+import budgettool.domain.User;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -20,6 +23,24 @@ public class TextUi implements Ui {
             System.out.println(job.toString());
         });
     }
+
+    @Override
+    public void showUsers(List<User> users) {
+        users.forEach((user) -> {
+            System.out.println(user.toString());
+        });
+    }
+
+    @Override
+    public void showRows(List<Row> rowList) {
+        rowList.forEach((row) -> {
+            System.out.println(row.toString());
+        });
+    }
+
+    
 }
+
+
     
 

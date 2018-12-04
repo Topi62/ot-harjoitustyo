@@ -48,4 +48,21 @@ public class BudgetService {
         rows = database.getRowsByBoolean(column);
         return rows;
     }
+
+    public List<User> getUsers() {
+        return database.getUsers();
+    }
+
+    public List<Job> getUserJobs(int userId) {
+        return database.getUserJobs(userId);
+    }
+
+    public List<Row> getRows() {
+        return database.getRows();
+    }
+
+    public List<Row> getRowsOfJob(int jobId) {
+        return database.getRows(jobId);
+    }
+    
 }

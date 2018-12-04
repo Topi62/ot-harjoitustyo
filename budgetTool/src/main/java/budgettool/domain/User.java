@@ -53,4 +53,8 @@ public class User {
         return boss;
     }
     
+    @Override
+    public String toString() {
+        return "id->" + id + " " + name + " boss ->" + boss;
+    }
 }
