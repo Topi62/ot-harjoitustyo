@@ -10,4 +10,4 @@
 | 25.11.| 8    | sql ratk. koodi toimivaks, pari toimintoa |
 | 26.11.| 4    | testisuunnittelua |
 | 27.11.| 3    | testejä, checkstyle korjaus, arkkiteht.kuv. github|
-|       |      |        |
+| 3.12. | 5    | tietokannan alustus, budgetservice eka toiminto, testejä  |
