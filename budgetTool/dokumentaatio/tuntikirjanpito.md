@@ -11,3 +11,4 @@
 | 26.11.| 4    | testisuunnittelua |
 | 27.11.| 3    | testejä, checkstyle korjaus, arkkiteht.kuv. github|
 | 3.12. | 5    | tietokannan alustus, budgetservice eka toiminto, testejä  |
+| 4.12. | 5    | tekstikäyttis ja toimintoja  |
