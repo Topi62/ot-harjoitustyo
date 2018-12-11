@@ -16,4 +16,4 @@
 | 8.12. | 8    | graafisen liittymän tekoa |
 |10.12. | 4    | graph.ui ja tableview |
 |11.12. | 6    | checkstyle, javadoc, sql alustuksen korjausta |
-  YHT    67 h
+| YHT   | 67 h |
