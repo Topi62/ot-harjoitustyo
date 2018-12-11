@@ -6,16 +6,20 @@
 package budgettool.domain;
 
 import budgettool.dao.BudgetDao;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
  *
  * @author tkarkine
  */
-public class BudgetService {
+public class BudgetService  {
     BudgetDao database;
     
+    
+       
+    /*
+    * constructor for test and textUi use
+    */
     public BudgetService(BudgetDao database) {
         this.database = database;
     }
@@ -62,7 +66,9 @@ public class BudgetService {
     }
 
     public List<Row> getRowsOfJob(int jobId) {
-        return database.getRows(jobId);
+        return database.getRowsOfJob(jobId);
     }
+
+   
     
 }

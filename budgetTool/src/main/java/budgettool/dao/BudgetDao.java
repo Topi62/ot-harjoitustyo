@@ -25,10 +25,11 @@ public interface BudgetDao {
      
     public List<Row> getRows();
     public List<Row> getRowsByBoolean(String column);
+    public List<Row> getRowsOfJob(int jobId);
     public void addRow(int jobid, String resurs, int budgetsum);
     public boolean addCostToRow(int id, int sum);
 
-    public List<Row> getRows(int jobId);
+   
 
    
 

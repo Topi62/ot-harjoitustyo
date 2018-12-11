@@ -6,6 +6,7 @@
 package budgettool.domain;
 
 import budgettool.dao.BudgetDao;
+import budgettool.dao.FakeBudgetDao;
 import budgettool.dao.SqlBudgetDao;
 import java.util.List;
 import org.junit.After;
@@ -38,8 +39,10 @@ public class BudgetServiceTest {
     
     @Before
     public void setUp() {
-        data = new SqlBudgetDao("jdbc:postgresql://localhost:5432/budgettool");
+        
+        data = new FakeBudgetDao();
         service = new BudgetService(data);
+       
     }
     
     @After
@@ -51,7 +54,7 @@ public class BudgetServiceTest {
       List<Row> rows;
       rows = service.listRowsByBoolean(1);
       // should think about test result
-      assertFalse(rows.isEmpty());
+      assertTrue(rows.isEmpty());
     }
 
     @Test
@@ -67,6 +70,6 @@ public class BudgetServiceTest {
       List<Row> rows;
       rows = service.listRowsByBoolean(1);
       // should think about test result
-      assertFalse(rows.isEmpty());
+      assertTrue(rows.isEmpty());
     }
 }

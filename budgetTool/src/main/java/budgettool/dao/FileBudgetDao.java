@@ -69,7 +69,7 @@ public class FileBudgetDao implements BudgetDao {
     }
 
     @Override
-    public List<Row> getRows(int jobId) {
+    public List<Row> getRowsOfJob(int jobId) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     

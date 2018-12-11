@@ -11,3 +11,8 @@
 | 26.11.| 4    | testisuunnittelua |
 | 27.11.| 3    | testejä, checkstyle korjaus, arkkiteht.kuv. github|
 | 3.12. | 5    | tietokannan alustus, budgetservice eka toiminto, testejä  |
+| 5.12. | 8    | graafisen liittymän opiskelua |
+| 8.12. | 8    | graafisen liittymän tekoa |
+|10.12. | 4    | graph.ui ja tableview |
+|11.12. | 6    | checkstyle, javadoc, sql alustuksen korjausta |
+  YHT    62 h

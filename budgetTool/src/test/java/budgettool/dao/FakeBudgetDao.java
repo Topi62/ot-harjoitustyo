@@ -14,12 +14,15 @@ import java.util.List;
  *
  * @author tkarkine
  */
-public class MemoryBudgetDao implements BudgetDao {
-
-   
+public class FakeBudgetDao implements BudgetDao {
 
     @Override
     public List<Job> getJobs() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public List<Job> getUserJobs(int userId) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
@@ -34,22 +37,7 @@ public class MemoryBudgetDao implements BudgetDao {
     }
 
     @Override
-    public void addRow(int jobid, String resurs, int budgetsum) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public boolean addCostToRow(int id, int sum) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
     public User loginUser(int id, String name) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public List<Row> getRowsByBoolean(String column) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
@@ -59,18 +47,31 @@ public class MemoryBudgetDao implements BudgetDao {
     }
 
     @Override
-    public List<Job> getUserJobs(int userId) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
     public List<Row> getRows() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
+    public List<Row> getRowsByBoolean(String column) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void addRow(int jobid, String resurs, int budgetsum) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public boolean addCostToRow(int id, int sum) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    
+    @Override
     public List<Row> getRowsOfJob(int jobId) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
+
+   
     
 }

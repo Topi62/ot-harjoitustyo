@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package budgettool.dao;
 
 import budgettool.domain.Job;
@@ -13,12 +8,11 @@ import java.io.FileReader;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import org.h2.tools.RunScript;
 
 /**
- *
+ * Class for Database connection
+ * 
  * @author tkarkine
  */
 public final class SqlBudgetDao implements BudgetDao {
@@ -33,20 +27,17 @@ public final class SqlBudgetDao implements BudgetDao {
             conn = DriverManager.getConnection(databaseAddress, "postgres", "admin");
             if (conn != null) {
                 //testing connection and create tables if not exists
-                ResultSet rs = conn.getMetaData().getTables(null, null, "user", null);
-                while (!rs.next()) { 
-                    try {
-                        RunScript.execute(conn, new FileReader("sql/database-tables.sql"));
-                        RunScript.execute(conn, new FileReader("sql/database-data.sql"));
-                        conn.close();
-                    } catch (FileNotFoundException | SQLException e) {
-                        errorMessage(e);
-                    } 
-                }      
-            } else {
-                // connect success, closed 
-                conn.close();
-            }
+//              ResultSet rs = conn.getMetaData().getTables(null, null, "rows", null);
+//               while (!rs.next()) { 
+                try {
+                    RunScript.execute(conn, new FileReader("sql/database-tables.sql"));
+                    RunScript.execute(conn, new FileReader("sql/database-data.sql"));
+                    conn.close();
+                } catch (FileNotFoundException | SQLException e) {
+                    errorMessage(e);
+                } 
+//              }      
+            } 
         } catch (SQLException e) {
             errorMessage(e);
         }
@@ -287,17 +278,11 @@ public final class SqlBudgetDao implements BudgetDao {
             res = st.executeQuery("SELECT * FROM \"rows\";");
             while (res.next()) {
                 list.add(new Row(res.getInt("id"),
-                    res.getInt("jobid"),    
-                    res.getString("resurs"),
-                    res.getInt("budgetsum"),
-                    res.getInt("usedsum"),
-                    res.getBoolean("approved"),
-                    res.getBoolean("exceeded"),
-                    res.getBoolean("request"),
-                    res.getInt("requestsum"),    
-                    res.getString("reason")
-                       
-                ));
+                    res.getInt("jobid"), res.getString("resurs"),
+                    res.getInt("budgetsum"), res.getInt("usedsum"),
+                    res.getBoolean("approved"), res.getBoolean("exceeded"),
+                    res.getBoolean("request"), res.getInt("requestsum"),    
+                    res.getString("reason")));
                 conn.close();
             }
         } catch (SQLException e) {
@@ -307,7 +292,7 @@ public final class SqlBudgetDao implements BudgetDao {
     }
 
     @Override
-    public List<Row> getRows(int jobId) {
+    public List<Row> getRowsOfJob(int jobId) {
         List<Row> list = new ArrayList<>();
         try {
             getConnection();
@@ -315,17 +300,11 @@ public final class SqlBudgetDao implements BudgetDao {
             res = st.executeQuery("SELECT * FROM \"rows\" WHERE (jobid)=" + jobId + ";");
             while (res.next()) {
                 list.add(new Row(res.getInt("id"),
-                    res.getInt("jobid"),    
-                    res.getString("resurs"),
-                    res.getInt("budgetsum"),
-                    res.getInt("usedsum"),
-                    res.getBoolean("approved"),
-                    res.getBoolean("exceeded"),
-                    res.getBoolean("request"),
-                    res.getInt("requestsum"),    
-                    res.getString("reason")
-                       
-                ));
+                    res.getInt("jobid"), res.getString("resurs"),
+                    res.getInt("budgetsum"), res.getInt("usedsum"),
+                    res.getBoolean("approved"), res.getBoolean("exceeded"),
+                    res.getBoolean("request"), res.getInt("requestsum"),    
+                    res.getString("reason")));
                 conn.close();
             }
         } catch (SQLException e) {
