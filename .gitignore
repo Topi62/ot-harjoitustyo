@@ -1,2 +1,8 @@
-/budgetTool/target
+/budgetTool/target/c*
+/budgetTool/target/g*
+/budgetTool/target/ma*
+/budgetTool/target/s*
+/budgetTool/target/jacoco.exec
+/budgetTool/target/t*
 /budgetTool/nbproject/
+
