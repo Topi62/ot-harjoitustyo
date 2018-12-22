@@ -12,6 +12,8 @@ Sovellus on harjoitustyö Helsingin yliopiston Tietojenkäsittelytieteen kurssil
 
 [Arkkitehtuurikuvaus](https://github.com/Topi62/ot-harjoitustyo/blob/master/budgetTool/dokumentaatio/arkkitehtuurikuvaus.md)
 
+[Javadoc](https://github.com/Topi62/ot-harjoitustyo/blob/master/budgetTool/target/site/apidocs)
+
 [Käyttöohje](https://github.com/Topi62/ot-harjoitustyo/blob/master/budgetTool/dokumentaatio/kayttoohje.md)
 
 [Tuntikirjapito](https://github.com/Topi62/ot-harjoitustyo/blob/master/budgetTool/dokumentaatio/tuntikirjanpito.md)
