@@ -10,11 +10,13 @@ Sovellus on harjoitustyö Helsingin yliopiston Tietojenkäsittelytieteen kurssil
 
 ## Dokumentaatio
 
-[Vaatimusmäärittely](https://github.com/Topi62/ot-harjoitustyo/blob/master/budgetTool/dokumentaatio/vaatimusmaarittely.md)
-
 [Arkkitehtuurikuvaus](https://github.com/Topi62/ot-harjoitustyo/blob/master/budgetTool/dokumentaatio/arkkitehtuurikuvaus.md)
 
+[Käyttöohje](https://github.com/Topi62/ot-harjoitustyo/blob/master/budgetTool/dokumentaatio/kayttoohje.md)
+
 [Tuntikirjapito](https://github.com/Topi62/ot-harjoitustyo/blob/master/budgetTool/dokumentaatio/tuntikirjanpito.md)
+
+[Vaatimusmäärittely](https://github.com/Topi62/ot-harjoitustyo/blob/master/budgetTool/dokumentaatio/vaatimusmaarittely.md)
 
 ## Sovelluksen tietokanta
 
@@ -29,13 +31,15 @@ mvn compile exec:java -Dexec.mainClass=Main
 </code>
 tai avatun projektin netbeansissa vihreällä napilla
 
-Testit suoritetaan komennolla
+Vähäiset testit suoritetaan komennolla
 
 <pre><code>
 mvn test
 </code></pre>
 
-## Releaset
+## Releaset 
+
+[lopullinen](https://github.com/Topi62/ot-harjoitustyo/blob/master/budgetTool/releases/tag/final)
 
 
 Testikattavuusraportti luodaan komennolla
@@ -45,6 +49,7 @@ mvn jacoco:report
 </code>
 
 Kattavuusraporttia voi tarkastella avaamalla selaimella tiedosto target/site/jacoco/index.html
+, joskin se jäi surkean vähäiseksi.
 
 Komento
 
@@ -61,5 +66,6 @@ Tiedostoon checkstyle.xml määrittelemät tarkistukset suoritetaan komennolla
  mvn jxr:jxr checkstyle:checkstyle
 </code>
 
-Mahdolliset virheilmoitukset selviävät avaamalla selaimella tiedosto target/site/checkstyle.html
+Mahdolliset virheilmoitukset selviävät avaamalla selaimella tiedosto target/site/checkstyle.html, lopulliseen versioo niitä jäi metodien ja tiedostojen pituutta koskien 13 kpl.
+
 
