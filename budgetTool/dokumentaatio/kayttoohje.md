@@ -1,6 +1,6 @@
 # Käyttöohje
 
-Lataa tiedosto [budgettool.jar](https://github.com/Topi62/Ot-harjoitustyo/releases/tag/Tag7)
+Lataa tiedosto [budgettool.jar](https://github.com/Topi62/Ot-harjoitustyo/releases/tag/Tag8)
 
 ## Konfigurointi
 
