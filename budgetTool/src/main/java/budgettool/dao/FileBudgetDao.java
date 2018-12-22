@@ -34,12 +34,12 @@ public class FileBudgetDao implements BudgetDao {
     }
 
     @Override
-    public void addRow(int jobid, String resurs, int budgetsum) {
+    public void addRow(int jobid, String resurs, int budgetsum, String reason) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public boolean addCostToRow(int id, int sum) {
+    public boolean addCostToRow(int id, int sum, boolean exceeded) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
@@ -54,7 +54,7 @@ public class FileBudgetDao implements BudgetDao {
     }
 
     @Override
-    public List<User> getUsers() {
+    public List<User> getUsers(int user) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
@@ -70,6 +70,16 @@ public class FileBudgetDao implements BudgetDao {
 
     @Override
     public List<Row> getRowsOfJob(int jobId) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void rejectRequest(Integer value) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void acceptRequest(int id, boolean exceeded, int budgetSum) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     

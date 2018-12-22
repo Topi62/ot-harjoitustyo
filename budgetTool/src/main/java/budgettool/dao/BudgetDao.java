@@ -21,13 +21,17 @@ public interface BudgetDao {
     
     public User addUser(int type, String name, int boss);
     public User loginUser(int id, String name);
-    public List<User> getUsers();
+    public List<User> getUsers(int user);
      
     public List<Row> getRows();
     public List<Row> getRowsByBoolean(String column);
     public List<Row> getRowsOfJob(int jobId);
-    public void addRow(int jobid, String resurs, int budgetsum);
-    public boolean addCostToRow(int id, int sum);
+    public void addRow(int jobid, String resurs, int requestsum, String reason);
+    public boolean addCostToRow(int id, int sum, boolean exceeded);
+
+    public void rejectRequest(Integer value);
+
+    public void acceptRequest(int id, boolean exceeded, int budgetSum);
 
    
 

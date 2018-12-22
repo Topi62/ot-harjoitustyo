@@ -80,7 +80,7 @@ public class TextUi implements Ui {
                          showRows();
                          break;
                 case 7 : System.out.println("Uusi työ -> Kuka tekee? Anna id numero (int).");
-                         userList = budjetti.getUsers();
+                         userList = budjetti.getUsers(1);
                          ui.showUsers();
                          userId = read.nextInt(); 
                          read.nextLine();

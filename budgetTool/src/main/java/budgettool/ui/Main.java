@@ -26,7 +26,7 @@ public class Main extends Application {
         GraphUi mainWindow = new GraphUi(service);
         
 
-        Scene scene = new Scene(mainWindow, 700, 400);
+        Scene scene = new Scene(mainWindow, 1000, 400);
         
         stage.setTitle("Budgettool");
         stage.setScene(scene);
@@ -34,7 +34,6 @@ public class Main extends Application {
     }
     
     public static void main(String[] args)  {
-        System.out.println("foo");
         launch(args);
     }
 }

@@ -40,11 +40,11 @@ public class BudgetService  {
         List<Row> rows;
         String column;
         switch (choice) {
-            case 1 : column = "(approved) = TRUE";
+            case 1 : column = " approved = 't'";
                 break;
-            case 2 : column = "(exceeded) = TRUE";
+            case 2 : column = " exceeded = 't'";
                 break;
-            case 3 : column = "(request) = TRUE";
+            case 3 : column = " request = 't'";
                 break;
             default : column = "1";
             // list all
@@ -53,8 +53,8 @@ public class BudgetService  {
         return rows;
     }
 
-    public List<User> getUsers() {
-        return database.getUsers();
+    public List<User> getUsers(int user) {
+        return database.getUsers(user);
     }
 
     public List<Job> getUserJobs(int userId) {
@@ -67,6 +67,32 @@ public class BudgetService  {
 
     public List<Row> getRowsOfJob(int jobId) {
         return database.getRowsOfJob(jobId);
+    }
+
+    public void addCostToRow(Row row) {
+        
+        database.addCostToRow(row.idProperty().get(), row.usedSumProperty().get(), row.exceededProperty().get());
+        
+    }
+
+    public void addRow(Row row) {
+        database.addRow(row.jobIdProperty().get(), row.resursProperty().get(), row.requestSumProperty().get(), row.reasonProperty().get());
+    }
+
+    public void addJob(Job job) {
+        database.addJob(job.getName(), job.getOwner());
+    }
+
+    public void addUser(User user) {
+        database.addUser(user.getType(), user.getName(), user.getBoss());
+    }
+
+    public void rejectRequest(Row row) {
+        database.rejectRequest(row.idProperty().get());
+    }
+
+    public void acceptRequest(Row row) {
+        database.acceptRequest(row.idProperty().get(), row.exceededProperty().get(), row.budgetSumProperty().get());
     }
 
    

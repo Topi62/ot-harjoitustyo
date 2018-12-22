@@ -17,12 +17,12 @@ public class User {
     private final StringProperty name;
     private final IntegerProperty boss;
     
-    public User(int type, String name) {
+    public User(int type, String name, int boss) {
         //uusi käyttäjä jolle haetaan tietokannasta id ja boss
         this.id = new SimpleIntegerProperty(0);
         this.type = new SimpleIntegerProperty(type);
         this.name = new SimpleStringProperty(name);       
-        this.boss = new SimpleIntegerProperty(0);
+        this.boss = new SimpleIntegerProperty(boss);
     }
     
     public User(int id, int type, String name, int boss) {

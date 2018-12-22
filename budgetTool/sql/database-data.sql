@@ -2,7 +2,7 @@
 TRUNCATE TABLE "jobs" CASCADE;
 TRUNCATE TABLE "rows" CASCADE;
 TRUNCATE TABLE "user" CASCADE;
-INSERT INTO "user" VALUES (1,1,'Boss',1);
+INSERT INTO "user" VALUES (1,1,'Boss',0);
 INSERT INTO "user" VALUES (2,2,'Foreman1',1);
 INSERT INTO "user" VALUES (3,2,'Foreman2',1);
 INSERT INTO "jobs" VALUES (1,'Order 2075',2);

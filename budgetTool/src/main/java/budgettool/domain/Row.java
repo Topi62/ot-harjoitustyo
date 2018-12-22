@@ -26,17 +26,17 @@ public class Row {
     private final IntegerProperty requestSum;
     private final StringProperty reason;
     
-    public Row(int jobId, String resurs, int budgetSum, String reason) {
+    public Row(int jobId, String resurs, int requestSum, String reason) {
         //new to be added to database
         this.id = new SimpleIntegerProperty(0);
         this.jobId = new SimpleIntegerProperty(jobId);
         this.resurs = new SimpleStringProperty(resurs);
-        this.budgetSum = new SimpleIntegerProperty(budgetSum);
+        this.budgetSum = new SimpleIntegerProperty(0);
         this.usedSum = new SimpleIntegerProperty(0);
         this.approved = new SimpleBooleanProperty(false);
         this.exceeded = new SimpleBooleanProperty(false);
         this.request = new SimpleBooleanProperty(true);
-        this.requestSum = new SimpleIntegerProperty(budgetSum);
+        this.requestSum = new SimpleIntegerProperty(requestSum);
         this.reason = new SimpleStringProperty(reason);
     }
     
@@ -185,6 +185,9 @@ public class Row {
     }
     
     public double getUsedPros() {
+        if (budgetSum.get() == 0) {
+            return 0.0;
+        }
         return (double) (usedSum.get() * 100 / budgetSum.get());
     }
     

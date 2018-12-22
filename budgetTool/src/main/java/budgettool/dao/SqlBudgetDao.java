@@ -18,7 +18,7 @@ import org.h2.tools.RunScript;
 public final class SqlBudgetDao implements BudgetDao {
     private String databaseAddress;
     private Connection conn;
-    private Statement st;
+    private PreparedStatement st;
     private ResultSet res;
 
     public SqlBudgetDao(String databaseAddress) {
@@ -60,9 +60,9 @@ public final class SqlBudgetDao implements BudgetDao {
     public void executeCommands(List<String> lauseet) {
         getConnection();
         try {
-            st = conn.createStatement();
             for (String lause : lauseet) {
-                st.executeUpdate(lause);
+                st = conn.prepareStatement(lause);            
+                st.executeUpdate();
             }    
             conn.close();
         } catch (SQLException ex) {
@@ -73,7 +73,7 @@ public final class SqlBudgetDao implements BudgetDao {
     public void executeCommand(String lause) {
         try {
             Statement st2 = conn.createStatement();
-            // suoritetaan komento
+            // suoritetaan komento poistettava?
             st2.executeUpdate(lause);
         } catch (SQLException e) {
             // error printing
@@ -88,8 +88,8 @@ public final class SqlBudgetDao implements BudgetDao {
         // "try with resources" closing automatically
         try  {
             getConnection();
-            st = conn.createStatement();
-            res = st.executeQuery(question);
+            st = conn.prepareStatement(question);
+            res = st.executeQuery();
             
         } catch (SQLException e) {
             // error printing
@@ -103,8 +103,8 @@ public final class SqlBudgetDao implements BudgetDao {
         List<Job> list = new ArrayList<>();
         try {
             getConnection();
-            st = conn.createStatement();
-            res = st.executeQuery("SELECT * FROM \"jobs\";");
+            st = conn.prepareStatement("SELECT * FROM \"jobs\";");
+            res = st.executeQuery();
             while (res.next()) {
                 list.add(new Job(res.getInt("id"),
                     res.getString("name"),
@@ -124,13 +124,16 @@ public final class SqlBudgetDao implements BudgetDao {
         try {
         //haetaan tietokannasta seuraava numero
             getConnection();
-            st = conn.createStatement();
-            res = st.executeQuery("Select max(id)+1 from \"jobs\";");
+            st = conn.prepareStatement("Select max(id)+1 from \"jobs\";");
+            res = st.executeQuery();
             if (res.next()) {
                 job = new Job(res.getInt(1), name, owner);
                 //lisätään job tietokantaan
-                executeCommand("INSERT INTO \"jobs\" VALUES (" + job.getId() +
-                    ", '" + name + "', " + owner + ");");
+                PreparedStatement ps = conn.prepareStatement("INSERT INTO \"jobs\" VALUES (?, ?, ?);");
+                ps.setInt(1, job.getId());
+                ps.setString(2, name);
+                ps.setInt(3, owner);
+                ps.executeUpdate();
             }
             conn.close();
         } catch (SQLException e) {
@@ -143,16 +146,18 @@ public final class SqlBudgetDao implements BudgetDao {
     @Override
     public User addUser(int type, String name, int boss) {
         User user = null;
-        try {
-        //haetaan tietokannasta seuraava numero
+        try {        
             getConnection();
-            st = conn.createStatement();
-            res = st.executeQuery("Select max(id)+1 from \"user\";");
+            st = conn.prepareStatement("Select max(id)+1 from \"user\";");
+            res = st.executeQuery();
             if (res.next()) {
                 user = new User(res.getInt(1), type, name, boss);
-                //lisätään job tietokantaan
-                executeCommand("INSERT INTO \"user\" VALUES (" + user.getId() +
-                    ", " + type + ", '" + name + "', " + boss + ");");
+                st = conn.prepareStatement("INSERT INTO \"user\" VALUES (?, ?, ?, ?);");
+                st.setInt(1, user.getId());
+                st.setInt(2, user.getType());
+                st.setString(3, name);
+                st.setInt(4, user.getBoss());
+                st.executeUpdate();
             }
             conn.close();
         } catch (SQLException e) {
@@ -163,16 +168,22 @@ public final class SqlBudgetDao implements BudgetDao {
     }
 
     @Override
-    public void addRow(int jobid, String resurs, int budgetsum) {
+    public void addRow(int jobid, String resurs, int requestsum, String reason) {
         try {
         //haetaan tietokannasta seuraava numero
             getConnection();
-            st = conn.createStatement();
-            res = st.executeQuery("Select max(id)+1 from \"rows\";");
+            st = conn.prepareStatement("Select max(id)+1 from \"rows\";");
+            res = st.executeQuery();
             if (res.next()) {
-               // add row to budget
-                executeCommand("INSERT INTO \"rows\" (id, jobid, resurs, budgetsum) VALUES (" + res.getInt(1) +
-                    ", " + jobid + ", '" + resurs + "', " + budgetsum + ");");
+                // add row to budget
+                st = conn.prepareStatement("INSERT INTO \"rows\" (id, jobid, resurs, budgetsum, approved, exceeded, request, "
+                       + "requestsum, reason) VALUES (?, ?, ?, 0, FALSE, FALSE, TRUE, ?, ?);");
+                st.setInt(1, res.getInt(1));
+                st.setInt(2, jobid);
+                st.setString(3, resurs);
+                st.setInt(4, requestsum);
+                st.setString(5, reason);
+                st.executeUpdate();
             }
             conn.close();
         } catch (SQLException e) {
@@ -182,17 +193,15 @@ public final class SqlBudgetDao implements BudgetDao {
     }
 
     @Override
-    public boolean addCostToRow(int id, int sum) {
+    public boolean addCostToRow(int id, int sum, boolean exceeded) {
         try {
         //haetaan tietokannasta seuraava numero
             getConnection();
-            st = conn.createStatement();
-            res = st.executeQuery("Select usedsum from \"rows\" where id = " + id + ";");
-            if (res.next()) {
-               // add row to budget
-                executeCommand("UPDATE \"rows\" set (usedsum)= " + (res.getInt(1) +
-                    sum) + " WHERE (id)= " + id + ";");
-            }
+            st = conn.prepareStatement("UPDATE \"rows\" set usedsum = ?, exceeded = ? where id = ?;");
+            st.setInt(1, sum);
+            st.setBoolean(2, exceeded);
+            st.setInt(3, id);
+            st.executeUpdate();
             conn.close();
         } catch (SQLException e) {
             // error printing
@@ -212,8 +221,10 @@ public final class SqlBudgetDao implements BudgetDao {
         List<Row> rows = new ArrayList<>();
         try {
             getConnection();
-            st = conn.createStatement();
-            res = st.executeQuery("SELECT * FROM \"rows\" WHERE " + condition + ";");
+            System.out.println(condition);
+            st = conn.prepareStatement("SELECT * FROM rows WHERE" + condition + ";");
+            // jos käyttää prepare + ? tulee ' merkit ympärille, ja kysely ei toimi
+            res = st.executeQuery();
             while (res.next()) {
                 rows.add(new Row(res.getInt("id"), res.getInt("jobid"),
                     res.getString("resurs"), res.getInt("budgetSum"), res.getInt("usedSum"),
@@ -229,12 +240,13 @@ public final class SqlBudgetDao implements BudgetDao {
     }
 
     @Override
-    public List<User> getUsers() {
+    public List<User> getUsers(int user) {
         List<User> list = new ArrayList<>();
         try {
             getConnection();
-            st = conn.createStatement();
-            res = st.executeQuery("SELECT * FROM \"user\";");
+            st = conn.prepareStatement("SELECT * FROM \"user\" WHERE (boss)=?;");
+            st.setInt(1, user);
+            res = st.executeQuery();
             while (res.next()) {
                 list.add(new User(res.getInt("id"),
                     res.getInt("type"),    
@@ -254,8 +266,9 @@ public final class SqlBudgetDao implements BudgetDao {
         List<Job> list = new ArrayList<>();
         try {
             getConnection();
-            st = conn.createStatement();
-            res = st.executeQuery("SELECT * FROM \"jobs\" WHERE (owner)=" + userId + ";");
+            st = conn.prepareStatement("SELECT * FROM \"jobs\" WHERE (owner)=?;");
+            st.setInt(1, userId);
+            res = st.executeQuery();
             while (res.next()) {
                 list.add(new Job(res.getInt("id"),
                     res.getString("name"),
@@ -274,8 +287,8 @@ public final class SqlBudgetDao implements BudgetDao {
         List<Row> list = new ArrayList<>();
         try {
             getConnection();
-            st = conn.createStatement();
-            res = st.executeQuery("SELECT * FROM \"rows\";");
+            st = conn.prepareStatement("SELECT * FROM \"rows\";");
+            res = st.executeQuery();
             while (res.next()) {
                 list.add(new Row(res.getInt("id"),
                     res.getInt("jobid"), res.getString("resurs"),
@@ -296,21 +309,51 @@ public final class SqlBudgetDao implements BudgetDao {
         List<Row> list = new ArrayList<>();
         try {
             getConnection();
-            st = conn.createStatement();
-            res = st.executeQuery("SELECT * FROM \"rows\" WHERE (jobid)=" + jobId + ";");
+            st = conn.prepareStatement("SELECT * FROM \"rows\" WHERE (jobid)=? ORDER BY (id);");
+            st.setInt(1, jobId);
+            res = st.executeQuery();
             while (res.next()) {
-                list.add(new Row(res.getInt("id"),
-                    res.getInt("jobid"), res.getString("resurs"),
-                    res.getInt("budgetsum"), res.getInt("usedsum"),
-                    res.getBoolean("approved"), res.getBoolean("exceeded"),
-                    res.getBoolean("request"), res.getInt("requestsum"),    
-                    res.getString("reason")));
+                list.add(new Row(res.getInt("id"), res.getInt("jobid"), res.getString("resurs"),
+                    res.getInt("budgetsum"), res.getInt("usedsum"), res.getBoolean("approved"), res.getBoolean("exceeded"),
+                    res.getBoolean("request"), res.getInt("requestsum"), res.getString("reason")));
                 conn.close();
             }
         } catch (SQLException e) {
-            errorMessage(e);
+            errorMessage(e); 
         }
         return list;
+    }
+
+    @Override
+    public void rejectRequest(Integer id) {
+        try {
+            getConnection();
+            st = conn.prepareStatement("UPDATE \"rows\" SET (requested) = 'false', (requestSum) = 0, (reason) = \"\" WHERE (id)= ?;");
+            st.setInt(1, id);
+            st.executeUpdate();
+            conn.close();
+        } catch (SQLException e) {
+            errorMessage(e);
+        }
+    }
+
+    @Override
+    public void acceptRequest(int id, boolean exceeded, int budqetSum) { 
+        try {
+            getConnection();
+            if (exceeded) {
+                st = conn.prepareStatement("UPDATE \"rows\" SET approved = 'true', request = 'false', exceeded = 'true', requestSum = 0, budgetSum = ?, reason = null WHERE id= ?;");
+            
+            } else {
+                st = conn.prepareStatement("UPDATE \"rows\" SET approved = 'true', request = 'false', exceeded = 'false', requestSum = 0, budgetSum = ?, reason = null WHERE id = ?;");
+            }
+            st.setInt(1, budqetSum);
+            st.setInt(2, id);
+            st.executeUpdate();
+            conn.close();
+        } catch (SQLException e) {
+            errorMessage(e);
+        }
     }
 }
 
