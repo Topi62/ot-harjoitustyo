@@ -52,13 +52,12 @@ public class GraphUi extends AnchorPane implements Ui {
     private Button getRows;
     private Button addRow;
     private Button addCost;
+    private Button addRequest;
     private Button getRequests;
     private int requested;
-    private Button handleRequest;
- 
+    private Button handleRequest; 
     private Button logginButton;
-    private Row selectedRow;
-    
+    private Row selectedRow;    
     private int userLoggedNo;
     private User selectedUser;
     private int selectedJobId;
@@ -146,6 +145,13 @@ public class GraphUi extends AnchorPane implements Ui {
             public void handle(ActionEvent t) {
                 requested = 1;
                 showRows();
+            }
+        });
+        addRequest = new Button("Make request");
+        addRequest.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent t) {
+                addRequest();
             }
         });
         
@@ -366,7 +372,7 @@ public class GraphUi extends AnchorPane implements Ui {
                 requested = 0;
             }
         } else {
-            hLayoutButtons.getChildren().addAll(getJobs, addJob, getRows, addRow, addCost);
+            hLayoutButtons.getChildren().addAll(getJobs, addJob, getRows, addRow, addCost, addRequest);
         }
         vLayout.getChildren().addAll(hLayoutFields, rowView, hLayoutButtons); 
     }
@@ -415,16 +421,30 @@ public class GraphUi extends AnchorPane implements Ui {
     }
     
     public void handleRequest() {
-        HandleRequestForm handleRequest;
-        handleRequest = new HandleRequestForm(service, selectedRow);
+        AddRequestForm handleRequest;
+        handleRequest = new AddRequestForm(service, selectedRow);
         formScene = new Scene(handleRequest, 500, 500);
         formStage = new Stage();
         formStage.setScene(formScene);
         formStage.showAndWait();
     }
     
+    public void addRequest() {
+        AddRequestForm addRequest;
+        Row selectedRow = rowView.getSelectionModel().getSelectedItem();
+        if (selectedRow == null) {
+            return;
+        }
+        
+        addRequest = new AddRequestForm(service, selectedRow);
+        formScene = new Scene(addRequest, 500, 500);
+        formStage = new Stage();
+        formStage.setScene(formScene);
+        formStage.showAndWait();
+    }
+    
     public void clearButtons() {
-        hLayoutButtons.getChildren().removeAll(getUsers, addUser, getJobs, addJob, getRows, addRow, addCost, getRequests, handleRequest);
+        hLayoutButtons.getChildren().removeAll(getUsers, addUser, getJobs, addJob, getRows, addRow, addCost, addRequest, getRequests, handleRequest);
     }
 }
     

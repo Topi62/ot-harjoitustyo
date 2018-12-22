@@ -82,5 +82,10 @@ public class FileBudgetDao implements BudgetDao {
     public void acceptRequest(int id, boolean exceeded, int budgetSum) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
+
+    @Override
+    public void addRequest(int id, boolean exceeded, int requestSum, String reason) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
     
 }

@@ -33,6 +33,8 @@ public interface BudgetDao {
 
     public void acceptRequest(int id, boolean exceeded, int budgetSum);
 
+    public void addRequest(int id, boolean exceeded, int requestSum, String reason);
+
    
 
    

@@ -95,6 +95,10 @@ public class BudgetService  {
         database.acceptRequest(row.idProperty().get(), row.exceededProperty().get(), row.budgetSumProperty().get());
     }
 
+    public void addRequest(Row row) {
+        database.addRequest(row.idProperty().get(), row.exceededProperty().get(), row.requestSumProperty().get(), row.reasonProperty().get());
+    }
+
    
     
 }

@@ -355,5 +355,25 @@ public final class SqlBudgetDao implements BudgetDao {
             errorMessage(e);
         }
     }
+
+    @Override
+    public void addRequest(int id, boolean exceeded, int requestSum, String reason) {
+        try {
+            getConnection();
+            if (exceeded) {
+                st = conn.prepareStatement("UPDATE \"rows\" SET approved = 'false', request = 'true', exceeded = 'true', requestSum = ?, reason = ? WHERE id= ?;");
+            
+            } else {
+                st = conn.prepareStatement("UPDATE \"rows\" SET approved = 'false', request = 'true', exceeded = 'false', requestSum = ?, reason = ? WHERE id = ?;");
+            }
+            st.setInt(1, requestSum);
+            st.setString(2, reason);
+            st.setInt(3, id);
+            st.executeUpdate();
+            conn.close();
+        } catch (SQLException e) {
+            errorMessage(e);
+        }
+    }
 }
 
