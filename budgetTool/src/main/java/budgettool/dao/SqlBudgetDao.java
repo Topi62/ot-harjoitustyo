@@ -13,6 +13,8 @@ import org.h2.tools.RunScript;
 /**
  * Class for Database connection
  * 
+ * 
+ * 
  * @author tkarkine
  */
 public final class SqlBudgetDao implements BudgetDao {
@@ -20,6 +22,12 @@ public final class SqlBudgetDao implements BudgetDao {
     private Connection conn;
     private PreparedStatement st;
     private ResultSet res;
+    
+    /**
+    * Tietokannan luonti
+    *
+    * @param databaseAddress mahdollistaisi tietokannan sijoituksen paremmin
+    */
 
     public SqlBudgetDao(String databaseAddress) {
         this.databaseAddress = databaseAddress;
@@ -44,10 +52,22 @@ public final class SqlBudgetDao implements BudgetDao {
        
     }
     
+    /**
+    * lyhentää virheiden käsittleyn kirjoitusta
+    *
+    * 
+    */
+    
     private void errorMessage(Exception e) {
         System.out.println("Error: " + e.getMessage());
     }
      
+    /**
+    * yhdistää tietokantaan
+    *
+    * 
+    */
+    
     public void getConnection()  {
         try {
             conn = DriverManager.getConnection(databaseAddress, "postgres", "admin");
@@ -56,6 +76,12 @@ public final class SqlBudgetDao implements BudgetDao {
             errorMessage(e);
         }
     }
+    
+    /**
+    * tekstikäyttöjärjestelmä sql käskyjen toteuttamista
+    * hylätty myöhemmin
+    * @param lauseet lista suoritettavista sql lauseista
+    */
         
     public void executeCommands(List<String> lauseet) {
         getConnection();
@@ -70,6 +96,12 @@ public final class SqlBudgetDao implements BudgetDao {
         } 
     }
     
+    /**
+    * yksittäisen sql käskyn suoritus
+    *
+    * @param lause joka suoritetaan SQL
+    */
+    
     public void executeCommand(String lause) {
         try {
             Statement st2 = conn.createStatement();
@@ -82,21 +114,11 @@ public final class SqlBudgetDao implements BudgetDao {
         }
     }
     
-    public ResultSet executeQuery(String question) {
-        // poistettava, conn sulkeminen sulkee resultSetin
-        res = null;
-        // "try with resources" closing automatically
-        try  {
-            getConnection();
-            st = conn.prepareStatement(question);
-            res = st.executeQuery();
-            
-        } catch (SQLException e) {
-            // error printing
-            errorMessage(e);
-        }
-        return res;
-    }
+    /**
+    * @return  List of Job eli listan haetuista töistä
+    *
+    * 
+    */
 
     @Override
     public List<Job> getJobs() {
@@ -117,6 +139,14 @@ public final class SqlBudgetDao implements BudgetDao {
         }
         return list;
     }
+    
+    /**
+    * Uuden työn luonti
+    * @param name uuden työn nimi
+    * @param owner uuden työn työnjohtaaj
+    * 
+    * @return Job uuden työn tietokantaan tallennettu olio
+    */
     
     @Override
     public Job addJob(String name, int owner) {
@@ -142,6 +172,15 @@ public final class SqlBudgetDao implements BudgetDao {
         }
         return job;
     }
+    
+    /**
+    * Uuden työnjohtajan lisäys
+    * @param type 1 päällikkö, 2 työnjohtaja
+    * @param name uuden käyttäjän nimi
+    * @param boss esimiehen käyttäjäid
+    * 
+    * @return User käyttäjän tietokantaan tallennettu olio
+    */
 
     @Override
     public User addUser(int type, String name, int boss) {
@@ -166,6 +205,16 @@ public final class SqlBudgetDao implements BudgetDao {
         }
         return user; 
     }
+    
+    /**
+    * Budjettirivin lisäys
+    * 
+    * @param jobid rivi liitetään aina työhön
+    * @param resurs rivin resurssia kuvaava nimi 15 char
+    * @param requestsum ehdotus budjettisummaksi
+    * @param reason syy kustannuksille 50 mrk
+    * 
+    */
 
     @Override
     public void addRow(int jobid, String resurs, int requestsum, String reason) {
@@ -191,6 +240,16 @@ public final class SqlBudgetDao implements BudgetDao {
             errorMessage(e);
         }
     }
+    
+    /**
+    * Kulun lisäys budjettiriviin
+    * 
+    * @param id rivin id, saatu valitsemalal tai syötteenä
+    * @param sum kulu, voi olla myös negatiivinen, joka vähentää esim hyvityksen
+    * @param exceeded boolean onko budjetti ylitetty
+    * 
+    * @return true, jos tallennus onnistui. ei käytössä
+    */
 
     @Override
     public boolean addCostToRow(int id, int sum, boolean exceeded) {
@@ -209,11 +268,27 @@ public final class SqlBudgetDao implements BudgetDao {
         }
         return true;
     }
+    
+    /**
+    * Ei toteutettu vielä
+    * @param id  käyttäjän tunnus
+    * @param name käyttäjän nimi 12 merkkiä
+    * 
+    * @return User kirjautunut käyttäjä
+    */
 
     @Override
     public User loginUser(int id, String name) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
+    
+    /**
+    * Budjettirivien haku eri tekijöillä
+    * 
+    * @param condition voitaisiin luoda eri hakuehtoja
+    * 
+    * @return List of Rows ehdon täyttäviä budjettirivejä
+    */
     
     @Override
     public List<Row> getRowsByBoolean(String condition) {
@@ -238,6 +313,14 @@ public final class SqlBudgetDao implements BudgetDao {
         }
         return rows; 
     }
+    
+    /**
+    * Työnjohtajien listaus
+    * 
+    * @param user esimiehen tunnus
+    * 
+    * @return List of User siis esimiehen alaiset
+    */
 
     @Override
     public List<User> getUsers(int user) {
@@ -260,6 +343,14 @@ public final class SqlBudgetDao implements BudgetDao {
         }
         return list;
     }
+    
+    /**
+    * Tietyn työnjohtajan työt
+    * 
+    * @param userId työnjohtajan tunnus
+    * 
+    * @return List of Jobs työnjohtajan työt
+    */
 
     @Override
     public List<Job> getUserJobs(int userId) {
@@ -281,6 +372,12 @@ public final class SqlBudgetDao implements BudgetDao {
         }
         return list;
     }
+    
+    /**
+    * Listaa kaikki budjettirivit
+    * 
+    * @return List of Row jossa kaikki budjettirivit
+    */
 
     @Override
     public List<Row> getRows() {
@@ -303,6 +400,14 @@ public final class SqlBudgetDao implements BudgetDao {
         }
         return list;
     }
+    
+    /**
+    * Tietyn työn budjettirivit
+    * 
+    * @param jobId työn id
+    * 
+    * @return List of Row työn budjettirivit
+    */
 
     @Override
     public List<Row> getRowsOfJob(int jobId) {
@@ -323,6 +428,13 @@ public final class SqlBudgetDao implements BudgetDao {
         }
         return list;
     }
+    
+    /**
+    * Ylityspyynnön hylkääminen
+    * 
+    * @param id hylättävän pyynnön budjettirivin tunnus
+    * 
+    */
 
     @Override
     public void rejectRequest(Integer id) {
@@ -336,6 +448,15 @@ public final class SqlBudgetDao implements BudgetDao {
             errorMessage(e);
         }
     }
+    
+    /**
+    * Budjettiehdotuksen hyväksyntä
+    * 
+    * @param id  budjettirivin tunnus
+    * @param exceeded true jos budjettisumma on ylitetty
+    * @param budqetSum uusi budjettisumma
+    * 
+    */
 
     @Override
     public void acceptRequest(int id, boolean exceeded, int budqetSum) { 
@@ -355,6 +476,16 @@ public final class SqlBudgetDao implements BudgetDao {
             errorMessage(e);
         }
     }
+    
+    /**
+    * Uuden budjettiylityksen pyyntö
+    * 
+    * @param id rivi jota pyyntö koskee
+    * @param exceeded onko budjetti jo ylitetty
+    * @param requestSum paljonko lisää budjettiin ehdotetaan
+    * @param reason syy budjetin kasvattamiselle
+    * 
+    */
 
     @Override
     public void addRequest(int id, boolean exceeded, int requestSum, String reason) {

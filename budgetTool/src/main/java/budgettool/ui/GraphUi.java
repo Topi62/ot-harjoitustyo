@@ -30,9 +30,10 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 /**
- *
- * @author tkarkine
- */
+* Päänäkymän grafiikan toteuttava luokka
+*
+*/
+
 public class GraphUi extends AnchorPane implements Ui {
     private BudgetService service;
     private Stage formStage;
@@ -61,6 +62,12 @@ public class GraphUi extends AnchorPane implements Ui {
     private int userLoggedNo;
     private User selectedUser;
     private int selectedJobId;
+    
+    /**
+    * Päänäkymän alustus
+    *
+    * @param service   po. sovelluslogiikka, nyt linkki tietokantaan
+    */
    
     public GraphUi(BudgetService service) {
         super();
@@ -69,6 +76,12 @@ public class GraphUi extends AnchorPane implements Ui {
         this.requested = 0;
         init();
     }
+    
+    /**
+    * 
+    * Alustustoimet
+    * 
+    */
         
     public void init() {
         
@@ -169,6 +182,12 @@ public class GraphUi extends AnchorPane implements Ui {
         this.getChildren().add(vLayout);
     
     }
+    
+    /**
+    * Käyttäjän kirjautuminen
+    *
+    * 
+    */
         
     public void loggedIn() {
         if (textField.notEmpty()) {
@@ -185,6 +204,12 @@ public class GraphUi extends AnchorPane implements Ui {
         }
        
     }
+    
+    /**
+    * Listaa työnjohtajat
+    *
+    * 
+    */
 
     @Override
     public void showUsers() {       
@@ -230,6 +255,12 @@ public class GraphUi extends AnchorPane implements Ui {
         
         
     }
+    
+    /**
+    * Listaa työt
+    *
+    * 
+    */
     
     @Override
     public void showJobs() {
@@ -289,6 +320,12 @@ public class GraphUi extends AnchorPane implements Ui {
         vLayout.getChildren().addAll(hLayoutFields, jobView, hLayoutButtons);  
      
     }
+    
+    /**
+    * Listaa budjettirivit
+    *
+    * 
+    */
 
     @Override
     public void showRows() { 
@@ -377,7 +414,11 @@ public class GraphUi extends AnchorPane implements Ui {
         vLayout.getChildren().addAll(hLayoutFields, rowView, hLayoutButtons); 
     }
 
-   
+   /**
+    * Luo AddRowForm näkymän budjettirivin lisäystä varten
+    *
+    * AddRowForm pakkauksessa budgettool.ui 
+    */
     
     public void addRow() {
         AddRowForm rowForm;
@@ -387,6 +428,13 @@ public class GraphUi extends AnchorPane implements Ui {
         formStage.setScene(formScene);
         formStage.showAndWait();
     }
+    
+    /**
+    * Luo AddCostForm näkymän kulun lisäystä varten
+    *
+    * AddCostForm pakkauksessa budgettool.ui 
+    */
+    
     
     public void addCost() {
         AddCostForm addCostForm;
@@ -401,6 +449,12 @@ public class GraphUi extends AnchorPane implements Ui {
         formStage.showAndWait();
     }
     
+    /**
+    * Luo AddUserForm näkymän työnjohtajan lisäystä varten
+    *
+    * AddUserForm pakkauksessa budgettool.ui 
+    */
+    
     public void addUser() {
         AddUserForm addUserForm;
         addUserForm = new AddUserForm(service, userLoggedNo);
@@ -409,6 +463,12 @@ public class GraphUi extends AnchorPane implements Ui {
         formStage.setScene(formScene);
         formStage.showAndWait();
     }
+    
+    /**
+    * Luo AddJobForm näkymän työn lisäystä varten
+    *
+    * AddJobForm pakkauksessa budgettool.ui 
+    */
     
     public void addJob() {
         AddJobForm addJobForm;
@@ -420,6 +480,12 @@ public class GraphUi extends AnchorPane implements Ui {
         
     }
     
+    /**
+    * Luo HandleRequestForm näkymän ylityspyynnön käsittelyä varten
+    *
+    * HandleRequestForm pakkauksessa budgettool.ui 
+    */
+    
     public void handleRequest() {
         AddRequestForm handleRequest;
         handleRequest = new AddRequestForm(service, selectedRow);
@@ -428,6 +494,12 @@ public class GraphUi extends AnchorPane implements Ui {
         formStage.setScene(formScene);
         formStage.showAndWait();
     }
+    
+    /**
+    * Luo AddRequestForm näkymän ylityspyynnön lisäystä varten
+    *
+    * AddRequestForm pakkauksessa budgettool.ui 
+    */
     
     public void addRequest() {
         AddRequestForm addRequest;
@@ -442,6 +514,12 @@ public class GraphUi extends AnchorPane implements Ui {
         formStage.setScene(formScene);
         formStage.showAndWait();
     }
+    
+    /**
+    * Apu metodi, jolla poistetaan näkymästä painikkeet
+    *
+    * tarvittavat painikkeet lisätään kussakin metodissa 
+    */
     
     public void clearButtons() {
         hLayoutButtons.getChildren().removeAll(getUsers, addUser, getJobs, addJob, getRows, addRow, addCost, addRequest, getRequests, handleRequest);

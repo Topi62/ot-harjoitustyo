@@ -9,16 +9,18 @@ import budgettool.dao.BudgetDao;
 import java.util.List;
 
 /**
- *
- * @author tkarkine
- */
+* Po sovelluslogiikasta huolehtiva luokka
+*
+* tässä muodossa lähinnä välittää pyynnöt 
+*/
+
 public class BudgetService  {
     BudgetDao database;
     
     
        
-    /*
-    * constructor for test and textUi use
+    /**
+    * @param    database    tietokannan käytöstä huolehtiva luokka 
     */
     public BudgetService(BudgetDao database) {
         this.database = database;
