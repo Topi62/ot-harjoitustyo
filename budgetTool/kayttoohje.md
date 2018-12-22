@@ -1,6 +1,6 @@
 # Käyttöohje
 
-Lataa tiedosto [todoapp.jar](https://github.com/Topi62/Ot-harjoitustyo/releases/tag/6)
+Lataa tiedosto [budgettool.jar](https://github.com/Topi62/Ot-harjoitustyo/releases/tag/Tag7)
 
 ## Konfigurointi
 
@@ -20,7 +20,7 @@ java -jar budgettool.jar
 
 Sovellus käynnistyy kirjautumisnäkymään:
 
-<img src="https://raw.githubusercontent.com/Topi62/ot-harjoitustyo/master/dokumentaatio/kuvat/login.png" width="1000">
+<img src="https://www.github.com/Topi62/ot-harjoitustyo/master/budgettool/dokumentaatio/kuvat/login2.png" width="1000">
 
 Päällikkö kirjautuu luvulla 1  syötekenttään ja painamalla _Log in_.
 
