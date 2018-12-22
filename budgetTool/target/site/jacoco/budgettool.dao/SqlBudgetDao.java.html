@@ -1,0 +1,244 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>SqlBudgetDao.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">budgetToolApp</a> &gt; <a href="index.source.html" class="el_package">budgettool.dao</a> &gt; <span class="el_source">SqlBudgetDao.java</span></div><h1>SqlBudgetDao.java</h1><pre class="source lang-java linenums">/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package budgettool.dao;
+
+import budgettool.domain.Job;
+import budgettool.domain.Row;
+import budgettool.domain.User;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import org.h2.tools.RunScript;
+
+/**
+ *
+ * @author tkarkine
+ */
+public final class SqlBudgetDao implements BudgetDao {
+    private String databaseAddress;
+    private Connection conn;
+    private Statement st;
+    private ResultSet res;
+
+<span class="fc" id="L30">    public SqlBudgetDao(String databaseAddress) {</span>
+<span class="fc" id="L31">        this.databaseAddress = databaseAddress;</span>
+        try {
+<span class="fc" id="L33">            conn = DriverManager.getConnection(databaseAddress, &quot;postgres&quot;, &quot;admin&quot;);</span>
+<span class="pc bpc" id="L34" title="1 of 2 branches missed.">            if (conn != null) {</span>
+                //testing connection and create tables if not exists
+<span class="fc" id="L36">                ResultSet rs = conn.getMetaData().getTables(null, null, &quot;user&quot;, null);</span>
+<span class="pc bpc" id="L37" title="1 of 2 branches missed.">                while (!rs.next()) { </span>
+                    try {
+<span class="nc" id="L39">                        RunScript.execute(conn, new FileReader(&quot;sql/database-tables.sql&quot;));</span>
+<span class="nc" id="L40">                        RunScript.execute(conn, new FileReader(&quot;sql/database-data.sql&quot;));</span>
+<span class="nc" id="L41">                        conn.close();</span>
+<span class="nc" id="L42">                    } catch (FileNotFoundException |SQLException e) {</span>
+<span class="nc" id="L43">                         errorMessage(e);</span>
+<span class="nc" id="L44">                    } </span>
+                }      
+<span class="fc" id="L46">            } else {</span>
+                // connect success, closed 
+<span class="nc" id="L48">                conn.close();</span>
+            }
+<span class="nc" id="L50">         } catch (SQLException e) {</span>
+<span class="nc" id="L51">             errorMessage(e);</span>
+<span class="fc" id="L52">         }</span>
+       
+<span class="fc" id="L54">    }</span>
+    
+    private void errorMessage(Exception e) {
+<span class="nc" id="L57">        System.out.println(&quot;Error: &quot; + e.getMessage());</span>
+<span class="nc" id="L58">    }</span>
+     
+    public void getConnection()  {
+        try {
+<span class="fc" id="L62">            conn = DriverManager.getConnection(databaseAddress, &quot;postgres&quot;, &quot;admin&quot;);</span>
+<span class="nc" id="L63">            } catch (SQLException e) {</span>
+           // error printing
+<span class="nc" id="L65">           errorMessage(e);</span>
+<span class="fc" id="L66">        }</span>
+<span class="fc" id="L67">    }</span>
+        
+    public void executeCommands(List&lt;String&gt; lauseet) {
+<span class="nc" id="L70">        getConnection();</span>
+       try {
+<span class="nc" id="L72">            st = conn.createStatement();</span>
+<span class="nc bnc" id="L73" title="All 2 branches missed.">            for (String lause : lauseet) {</span>
+<span class="nc" id="L74">            st.executeUpdate(lause);</span>
+<span class="nc" id="L75">        }    </span>
+<span class="nc" id="L76">        conn.close();</span>
+<span class="nc" id="L77">        } catch (SQLException ex) {</span>
+<span class="nc" id="L78">            errorMessage(ex);</span>
+<span class="nc" id="L79">        }</span>
+            // suoritetaan komennot
+        
+<span class="nc" id="L82">    }</span>
+    
+    public void executeCommand(String lause) {
+        try {
+<span class="fc" id="L86">            Statement st2 = conn.createStatement();</span>
+            // suoritetaan komento
+<span class="fc" id="L88">            st2.executeUpdate(lause);</span>
+<span class="nc" id="L89">         } catch (SQLException e) {</span>
+            // error printing
+<span class="nc" id="L91">            errorMessage(e);</span>
+            
+<span class="fc" id="L93">        }</span>
+<span class="fc" id="L94">    }</span>
+    
+    public ResultSet executeQuery(String question) {
+        // poistettava, conn sulkeminen sulkee resultSetin
+<span class="nc" id="L98">        res = null;</span>
+        // &quot;try with resources&quot; closing automatically
+        try  {
+<span class="nc" id="L101">            getConnection();</span>
+<span class="nc" id="L102">            st = conn.createStatement();</span>
+<span class="nc" id="L103">            res = st.executeQuery(question);</span>
+            
+<span class="nc" id="L105">        } catch (SQLException e) {</span>
+            // error printing
+<span class="nc" id="L107">            errorMessage(e);</span>
+<span class="nc" id="L108">        }</span>
+<span class="nc" id="L109">        return res;</span>
+    }
+
+    @Override
+    public List&lt;Job&gt; getJobs() {
+        //ei vielä toteutettu hakua, näytetään uin valmis lista
+<span class="fc" id="L115">        List&lt;Job&gt; list = new ArrayList&lt;&gt;();</span>
+        try {
+<span class="fc" id="L117">            getConnection();</span>
+<span class="fc" id="L118">            st = conn.createStatement();</span>
+<span class="fc" id="L119">            res = st.executeQuery(&quot;SELECT * FROM \&quot;jobs\&quot;;&quot;);</span>
+<span class="fc bfc" id="L120" title="All 2 branches covered.">            while (res.next()) {</span>
+<span class="fc" id="L121">                list.add(new Job(res.getInt(&quot;id&quot;),</span>
+<span class="fc" id="L122">                    res.getString(&quot;name&quot;),</span>
+<span class="fc" id="L123">                    res.getInt(&quot;owner&quot;)</span>
+                ));
+<span class="fc" id="L125">                conn.close();</span>
+            }
+<span class="nc" id="L127">        } catch (SQLException e) {</span>
+<span class="nc" id="L128">            errorMessage(e);</span>
+<span class="fc" id="L129">        }</span>
+<span class="fc" id="L130">        return list;</span>
+    }
+    
+    @Override
+    public Job addJob(String name, int owner) {
+<span class="fc" id="L135">        Job job = null;</span>
+        try {
+        //haetaan tietokannasta seuraava numero
+<span class="fc" id="L138">            getConnection();</span>
+<span class="fc" id="L139">            st = conn.createStatement();</span>
+<span class="fc" id="L140">            res = st.executeQuery(&quot;Select max(id)+1 from \&quot;jobs\&quot;;&quot;);</span>
+<span class="pc bpc" id="L141" title="1 of 2 branches missed.">            if (res.next()) {</span>
+<span class="fc" id="L142">                job = new Job(res.getInt(1), name, owner);</span>
+                //lisätään job tietokantaan
+<span class="fc" id="L144">                executeCommand(&quot;INSERT INTO \&quot;jobs\&quot; VALUES (&quot; + job.getId() +</span>
+                    &quot;, '&quot; + name + &quot;', &quot; + owner + &quot;);&quot;);
+                }
+<span class="fc" id="L147">            conn.close();</span>
+<span class="nc" id="L148">            } catch (SQLException e) {</span>
+            // error printing
+<span class="nc" id="L150">            errorMessage(e);</span>
+<span class="fc" id="L151">        }</span>
+<span class="fc" id="L152">        return job;</span>
+    }
+
+    @Override
+    public User addUser(int type, String name, int boss) {
+<span class="nc" id="L157">       User user = null;</span>
+        try {
+        //haetaan tietokannasta seuraava numero
+<span class="nc" id="L160">            getConnection();</span>
+<span class="nc" id="L161">            st = conn.createStatement();</span>
+<span class="nc" id="L162">            res = st.executeQuery(&quot;Select max(id)+1 from \&quot;user\&quot;;&quot;);</span>
+<span class="nc bnc" id="L163" title="All 2 branches missed.">            if (res.next()) {</span>
+<span class="nc" id="L164">                user = new User(res.getInt(1), type, name, boss);</span>
+                //lisätään job tietokantaan
+<span class="nc" id="L166">                executeCommand(&quot;INSERT INTO \&quot;user\&quot; VALUES (&quot; + user.getId() +</span>
+                  &quot;, &quot; + type + &quot;, '&quot; + name + &quot;', &quot; + boss + &quot;);&quot;);
+                }
+<span class="nc" id="L169">            conn.close();</span>
+<span class="nc" id="L170">            } catch (SQLException e) {</span>
+            // error printing
+<span class="nc" id="L172">            errorMessage(e);</span>
+<span class="nc" id="L173">        }</span>
+<span class="nc" id="L174">        return user; </span>
+    }
+
+    @Override
+    public void addRow(int jobid, String resurs, int budgetsum) {
+        try {
+        //haetaan tietokannasta seuraava numero
+<span class="nc" id="L181">            getConnection();</span>
+<span class="nc" id="L182">            st = conn.createStatement();</span>
+<span class="nc" id="L183">            res = st.executeQuery(&quot;Select max(id)+1 from \&quot;rows\&quot;;&quot;);</span>
+<span class="nc bnc" id="L184" title="All 2 branches missed.">            if (res.next()) {</span>
+               // add row to budget
+<span class="nc" id="L186">                executeCommand(&quot;INSERT INTO \&quot;rows\&quot; (id, jobid, resurs, budgetsum) VALUES (&quot; + res.getInt(1) +</span>
+                  &quot;, &quot; + jobid+ &quot;, '&quot; + resurs + &quot;', &quot; + budgetsum + &quot;);&quot;);
+                }
+<span class="nc" id="L189">            conn.close();</span>
+<span class="nc" id="L190">            } catch (SQLException e) {</span>
+            // error printing
+<span class="nc" id="L192">            errorMessage(e);</span>
+<span class="nc" id="L193">        }</span>
+<span class="nc" id="L194">    }</span>
+
+    @Override
+    public boolean addCostToRow(int id, int sum) {
+        try {
+        //haetaan tietokannasta seuraava numero
+<span class="nc" id="L200">            getConnection();</span>
+<span class="nc" id="L201">            st = conn.createStatement();</span>
+<span class="nc" id="L202">            res = st.executeQuery(&quot;Select usedsum from \&quot;rows\&quot; where id = &quot; + id + &quot;;&quot;);</span>
+<span class="nc bnc" id="L203" title="All 2 branches missed.">            if (res.next()) {</span>
+               // add row to budget
+<span class="nc" id="L205">                executeCommand(&quot;UPDATE \&quot;rows\&quot; set (usedsum)= &quot; + (res.getInt(1) +</span>
+                  sum) + &quot; WHERE (id)= &quot; + id + &quot;;&quot;);
+                }
+<span class="nc" id="L208">            conn.close();</span>
+<span class="nc" id="L209">            } catch (SQLException e) {</span>
+            // error printing
+<span class="nc" id="L211">            errorMessage(e);</span>
+<span class="nc" id="L212">        }</span>
+<span class="nc" id="L213">        return true;</span>
+    }
+
+    @Override
+    public User loginUser(int id, String name) {
+<span class="nc" id="L218">        throw new UnsupportedOperationException(&quot;Not supported yet.&quot;); //To change body of generated methods, choose Tools | Templates.</span>
+    }
+    
+    @Override
+    public List&lt;Row&gt; getRowsByBoolean(String condition) {
+        //usage with approved, exceeded or request
+<span class="fc" id="L224">       List&lt;Row&gt; rows = new ArrayList&lt;&gt;();</span>
+        try {
+<span class="fc" id="L226">            getConnection();</span>
+<span class="fc" id="L227">            st = conn.createStatement();</span>
+<span class="fc" id="L228">            res = st.executeQuery(&quot;SELECT * FROM \&quot;rows\&quot; WHERE &quot; + condition + &quot;;&quot;);</span>
+<span class="fc bfc" id="L229" title="All 2 branches covered.">            while (res.next()) {</span>
+<span class="fc" id="L230">                rows.add(new Row(res.getInt(&quot;id&quot;), res.getInt(&quot;jobid&quot;),</span>
+<span class="fc" id="L231">                    res.getString(&quot;resurs&quot;), res.getInt(&quot;budgetSum&quot;), res.getInt(&quot;usedSum&quot;),</span>
+<span class="fc" id="L232">                    res.getBoolean(&quot;approved&quot;), res.getBoolean(&quot;exceeded&quot;), res.getBoolean(&quot;request&quot;),</span>
+<span class="fc" id="L233">                    res.getInt(&quot;requestSum&quot;), res.getString(&quot;reason&quot;)</span>
+                ));
+<span class="fc" id="L235">                conn.close();</span>
+            }
+<span class="nc" id="L237">        } catch (SQLException e) {</span>
+<span class="nc" id="L238">            errorMessage(e);</span>
+<span class="fc" id="L239">        }</span>
+<span class="fc" id="L240">        return rows; </span>
+    }
+}
+
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.0.201801022044</span></div></body></html>

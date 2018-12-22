@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Row.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">budgetToolApp</a> &gt; <a href="index.source.html" class="el_package">budgettool.domain</a> &gt; <span class="el_source">Row.java</span></div><h1>Row.java</h1><pre class="source lang-java linenums">/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package budgettool.domain;
+
+import static org.h2.util.StringUtils.isNullOrEmpty;
+
+/**
+ *
+ * @author tkarkine
+ */
+public class Row {
+    private int id;
+    private int jobId;
+    private String resurs;
+    private int budgetSum;
+    private int usedSum;
+    private boolean approved;
+    private boolean exceeded;
+    private boolean request;
+    private int requestSum;
+    private String reason;
+    
+<span class="nc" id="L26">    public Row(int jobId, String resurs, int budgetSum, String reason) {</span>
+        //new to be added to database
+<span class="nc" id="L28">        this.jobId = jobId;</span>
+<span class="nc" id="L29">        this.resurs = resurs;</span>
+<span class="nc" id="L30">        this.budgetSum = budgetSum;</span>
+<span class="nc" id="L31">        this.usedSum = 0;</span>
+<span class="nc" id="L32">        this.approved = false;</span>
+<span class="nc" id="L33">        this.exceeded = false;</span>
+<span class="nc" id="L34">        this.request = true;</span>
+<span class="nc" id="L35">        this.requestSum = budgetSum;</span>
+<span class="nc" id="L36">        this.reason = reason;</span>
+<span class="nc" id="L37">    }</span>
+    
+    public Row (int id, int jobId, String resurs, int budgetSum, int usedSum, 
+<span class="fc" id="L40">            boolean approved, boolean exceeded, boolean request, int requestSum, String reason) {</span>
+<span class="fc" id="L41">        this.id = id;</span>
+<span class="fc" id="L42">        this.jobId = jobId;</span>
+<span class="fc" id="L43">        this.resurs = resurs;</span>
+<span class="fc" id="L44">        this.budgetSum = budgetSum;</span>
+<span class="fc" id="L45">        this.usedSum = usedSum;</span>
+<span class="fc" id="L46">        this.approved = approved;</span>
+<span class="fc" id="L47">        this.exceeded = exceeded;</span>
+<span class="fc" id="L48">        this.request = request;</span>
+<span class="fc" id="L49">        this.requestSum = budgetSum;</span>
+<span class="fc" id="L50">        this.reason = reason;</span>
+<span class="fc" id="L51">    }</span>
+    
+    public int getBudgetSum() {
+<span class="nc" id="L54">        return budgetSum;</span>
+    }
+    
+    public boolean setRequests(int requestSum, String reason) {
+<span class="nc bnc" id="L58" title="All 4 branches missed.">        if (requestSum &lt; budgetSum || isNullOrEmpty(reason)) {</span>
+<span class="nc" id="L59">            return false;</span>
+        }
+<span class="nc" id="L61">        this.request = true;</span>
+<span class="nc" id="L62">        this.requestSum = requestSum;</span>
+<span class="nc" id="L63">        this.reason = reason;</span>
+<span class="nc" id="L64">        return true;</span>
+    }
+    
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.0.201801022044</span></div></body></html>

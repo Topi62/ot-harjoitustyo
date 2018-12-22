@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Main.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">budgetToolApp</a> &gt; <a href="index.source.html" class="el_package">default</a> &gt; <span class="el_source">Main.java</span></div><h1>Main.java</h1><pre class="source lang-java linenums">/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+
+
+import budgettool.dao.BudgetDao;
+import budgettool.dao.SqlBudgetDao;
+import budgettool.domain.BudgetService;
+import budgettool.domain.Job;
+import budgettool.ui.TextUi;
+import budgettool.ui.Ui;
+import java.sql.SQLException;
+import java.util.List;
+
+
+/**
+ *
+ * @author tkarkine
+ */
+<span class="nc" id="L22">public class Main {</span>
+    public static void main(String[] args)  {
+        //tässä versiossa vielä main hoitaa hommat, jatkossa ui:ssa käyttäjä
+        BudgetDao database;
+        BudgetService budjetti;
+        Ui ui;
+        List&lt;Job&gt; list;
+        Job job;
+        
+<span class="nc" id="L31">        ui = new TextUi();</span>
+        
+       
+<span class="nc" id="L34">            database = new SqlBudgetDao(&quot;jdbc:postgresql://localhost:5432/budgettool&quot;);</span>
+            // tällä välitetään jo database, mutta pitää vielä välittää käyttöliittymä
+<span class="nc" id="L36">            budjetti = new BudgetService(database);</span>
+         
+            //täytyy vielä miettiä mihin nää loput laitetaan jatkossa?
+              
+            //ensimmäinen toiminnallisuus, näytetään työlista
+<span class="nc" id="L41">            list = budjetti.getJobs();</span>
+<span class="nc" id="L42">            ui.showJobs(list);</span>
+        
+            //toinen toiminnallisuus lisätään työ
+            //lisätään uusi job foreman 1:lle, 
+<span class="nc" id="L46">            job = budjetti.addJob(&quot;New projekt&quot;, 2);</span>
+            // tulostetaan uuden jobin tietokannan antama id
+<span class="nc" id="L48">            System.out.println(job.getId());</span>
+        
+         
+                
+<span class="nc" id="L52">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.0.201801022044</span></div></body></html>

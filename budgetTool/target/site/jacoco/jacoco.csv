@@ -1,0 +1,9 @@
+GROUP,PACKAGE,CLASS,INSTRUCTION_MISSED,INSTRUCTION_COVERED,BRANCH_MISSED,BRANCH_COVERED,LINE_MISSED,LINE_COVERED,COMPLEXITY_MISSED,COMPLEXITY_COVERED,METHOD_MISSED,METHOD_COVERED
+budgetToolApp,default,Main,33,0,0,0,9,0,2,0,2,0
+budgetToolApp,budgettool.domain,Row,53,33,4,0,18,12,5,1,3,1
+budgetToolApp,budgettool.domain,User,20,24,0,0,9,9,4,4,4,4
+budgetToolApp,budgettool.domain,Job,39,15,0,0,9,6,5,2,5,2
+budgetToolApp,budgettool.domain,BudgetService,22,21,2,2,6,10,5,3,3,2
+budgetToolApp,budgettool.dao,FileBudgetDao,38,0,0,0,8,0,8,0,8,0
+budgetToolApp,budgettool.dao,SqlBudgetDao,300,233,11,7,72,49,14,8,7,6
+budgetToolApp,budgettool.dao,MemoryBudgetDao,38,0,0,0,8,0,8,0,8,0
