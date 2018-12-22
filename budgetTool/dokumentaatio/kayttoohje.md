@@ -28,15 +28,17 @@ Päällikkö kirjautuu luvulla 1  syötekenttään ja painamalla _Log in_.
 
 Olemassa olevat työnjohtajat saa listattua painikkeella _Users_
 
+<img src="kuvat/users.png" width="1000">
+
 Uusi käyttäjä  panikkeella _add user_, jolloin avautuu lomake syöttöä varten. Type 1 olisi tarkoitus olla päällikkö, m62 työnjohtaja, mutta tämä ominaisuus ei vielä toimi, nyt vain käyttäjä 1 on päällikkö.
 
 Antamalla käyttäjän id:n syötekenttään tai valitsemalla rivin työnjohtajien listauksesta ja painikkeella _Jobs_ saa listattua kyseisen työnjohtajan työt. Rivin valinta on ristiriita tilanteessa etusijalla.
 
-<img src="https://raw.githubusercontent.com/Topi62/ot-harjoitustyo/master/dokumentaatio/kuvat/jobs.png width="1000">
+<img src="kuvat/jobs.png width="1000">
 
 Antamalla työn id:n syötekenttään tai valitsemalla rivin työlistalta ja painikkeella _Rows_ saa listattua kyseisen työn budjettirivit.
 
-<img src="https://raw.githubusercontent.com/Topi62/ot-harjoitustyo/master/dokumentaatio/kuvat/rows.png with="1000">
+<img src="kuvat/rows.png with="1000">
 
 Requests painikkeella päällikkö näkee kaikki budjettirivit, joille on tehty lisämäärärahapyyntöjä. Valitsemalla rivin ja painamalla _Handle Request_ päällikkö voi hylätä tai hyväksyä pyynnön avautuvalla lomakkeella. 
 
@@ -47,6 +49,8 @@ _addUser_, _addJob_ ja _addRow_ painikkeet avaavat nimensä mukaisen lomakkeen, 
 Työnjohtaja voi listata työnsä painikkeella _Jobs_ tai lisätä työn painikkeella _addJob_ avautuvalla lomakkeella. Työn voi lisätä myös toiselle käyttäjälle.
 
 Töiden listauksesta voi valita jonkin budjettirivitarkasteluun painikkeella _rows_. 
+
+<img src="kuvat/rows2.png with="1000">
 
 Budjettirivin valitsemalla sille voi lisätä kustannuksia _addCost->Row_, tai pyytää lisäbudjettia _request_ painikkeella. Myös negatiiviset summat ovat mahdollista ja näin joko poistaa kuluja tai pienentää budjettia.
 
