@@ -20,7 +20,7 @@ java -jar budgettool.jar
 
 Sovellus käynnistyy kirjautumisnäkymään:
 
-<img src="https:/raw.githubusercontent.com/Topi62/ot-harjoitustyo/master/budgettool/dokumentaatio/kuvat/login2.png" width="1000">
+<img src="https:/raw.githubusercontent.com/Topi62/ot-harjoitustyo/master/budgetTool/dokumentaatio/kuvat/login2.png" width="1000">
 
 Päällikkö kirjautuu luvulla 1  syötekenttään ja painamalla _Log in_.
 
