@@ -20,7 +20,7 @@ java -jar budgettool.jar
 
 Sovellus käynnistyy kirjautumisnäkymään:
 
-<img src="kuvat/login2.png" width="1000">
+<img src="kuvat/login.png" width="1000">
 
 Päällikkö kirjautuu luvulla 1  syötekenttään ja painamalla _Log in_.
 
@@ -34,13 +34,15 @@ Uusi käyttäjä  panikkeella _add user_, jolloin avautuu lomake syöttöä vart
 
 Antamalla käyttäjän id:n syötekenttään tai valitsemalla rivin työnjohtajien listauksesta ja painikkeella _Jobs_ saa listattua kyseisen työnjohtajan työt. Rivin valinta on ristiriita tilanteessa etusijalla.
 
-<img src="kuvat/jobs.png width="1000">
+<img src="kuvat/jobs.png" width="1000">
 
 Antamalla työn id:n syötekenttään tai valitsemalla rivin työlistalta ja painikkeella _Rows_ saa listattua kyseisen työn budjettirivit.
 
-<img src="kuvat/rows.png with="1000">
+<img src="kuvat/rows.png" width="1000">
 
 Requests painikkeella päällikkö näkee kaikki budjettirivit, joille on tehty lisämäärärahapyyntöjä. Valitsemalla rivin ja painamalla _Handle Request_ päällikkö voi hylätä tai hyväksyä pyynnön avautuvalla lomakkeella. 
+
+<img src="kuvat/handle.png" width="1000">
 
 _addUser_, _addJob_ ja _addRow_ painikkeet avaavat nimensä mukaisen lomakkeen, joissa kaikki kentät on syötettävä.
 
@@ -50,7 +52,7 @@ Työnjohtaja voi listata työnsä painikkeella _Jobs_ tai lisätä työn painikk
 
 Töiden listauksesta voi valita jonkin budjettirivitarkasteluun painikkeella _rows_. 
 
-<img src="kuvat/rows2.png with="1000">
+<img src="kuvat/rows2.png" with="1000">
 
 Budjettirivin valitsemalla sille voi lisätä kustannuksia _addCost->Row_, tai pyytää lisäbudjettia _request_ painikkeella. Myös negatiiviset summat ovat mahdollista ja näin joko poistaa kuluja tai pienentää budjettia.
 
